@@ -27,7 +27,7 @@ export default function ProductPage() {
     );
   }
 
-  if (error || !product?.data) {
+  if (error || !product) {
     return (
       <div className="main_container py-8">
         <p className="text-center text-red-500">
@@ -37,55 +37,47 @@ export default function ProductPage() {
     );
   }
 
-  const productData = product.data;
-
   return (
     <div className="main_container py-8">
       {/* Product Images & Info */}
       <div className="grid md:grid-cols-2 gap-8 mb-8">
-        <ProductImages
-          imageCover={productData.imageCover}
-          title={productData.title}
-        />
+        <ProductImages imageCover={product.imageCover} title={product.title} />
         <ProductInfo
-          title={productData.title}
-          price={productData.price}
-          priceAfterDiscount={productData.priceAfterDiscount}
-          ratingsAverage={productData.ratingsAverage}
-          ratingsQuantity={productData.ratingsQuantity}
-          description={productData.description}
-          brand={productData.brand}
-          category={productData.category}
-          subcategory={productData.subcategory}
-          quantity={productData.quantity}
-          sold={productData.sold}
+          title={product.title}
+          price={product.price}
+          priceAfterDiscount={product.priceAfterDiscount}
+          ratingsAverage={product.ratingsAverage}
+          ratingsQuantity={product.ratingsQuantity}
+          description={product.description}
+          brand={product.brand}
+          category={product.category}
+          subcategory={product.subcategory}
+          quantity={product.quantity}
+          sold={product.sold}
         />
       </div>
 
       {/* Product Gallery */}
-      <ProductGallery images={productData.images} title={productData.title} />
+      <ProductGallery images={product.images} title={product.title} />
 
       {/* Additional Info */}
       <div className="grid md:grid-cols-2 gap-8 mb-8">
         <ProductDetails
-          id={productData.id}
-          slug={productData.slug}
-          createdAt={productData.createdAt}
-          updatedAt={productData.updatedAt}
+          id={product.id}
+          slug={product.slug}
+          createdAt={product.createdAt}
+          updatedAt={product.updatedAt}
         />
-        <BrandCategory
-          brand={productData.brand}
-          category={productData.category}
-        />
+        <BrandCategory brand={product.brand} category={product.category} />
       </div>
 
       {/* Questions & Answers */}
       <div className="mb-8">
-        <Questions questions={productData.questions} />
+        <Questions questions={product.questions} />
       </div>
 
       {/* Reviews */}
-      <Reviews reviews={productData.reviews} />
+      <Reviews reviews={product.reviews} />
     </div>
   );
 }

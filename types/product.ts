@@ -33,6 +33,20 @@ export interface Review {
   __v: number;
 }
 
+export interface Question {
+  _id: string;
+  question: string;
+  answer?: string;
+  product: string;
+  user: {
+    _id: string;
+    name: string;
+  };
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
 export interface Product {
   sold: number | null;
   images: string[];
@@ -54,6 +68,7 @@ export interface Product {
   id: string;
   availableColors?: string[];
   reviews?: Review[];
+  questions?: Question[];
 }
 
 export interface ProductsMetadata {
