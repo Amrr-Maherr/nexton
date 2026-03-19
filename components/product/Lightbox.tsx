@@ -14,6 +14,12 @@ import {
   Play,
   Pause,
 } from "lucide-react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { FreeMode, Navigation, Thumbs } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/free-mode";
+import "swiper/css/navigation";
+import "swiper/css/thumbs";
 
 interface LightboxProps {
   images: string[];
@@ -326,32 +332,46 @@ export function Lightbox({
         </button>
       </div>
 
-      {/* Thumbnail Strip */}
+      {/* Thumbnail Strip with Swiper */}
       {showThumbnails && (
-        <div className="flex gap-2 p-4 bg-black/80 overflow-x-auto">
-          {images.map((image, index) => (
-            <button
-              key={index}
-              onClick={(e) => {
-                e.stopPropagation();
-                onPrevious(); // Go to previous first
-                onNext(); // Then navigate to selected index
-                setZoom(1);
-              }}
-              className={`relative flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-colors ${
-                index === currentIndex
-                  ? "border-white"
-                  : "border-transparent hover:border-white/50"
-              }`}
-            >
-              <Image
-                src={image}
-                alt={`Thumbnail ${index + 1}`}
-                fill
-                className="object-cover"
-              />
-            </button>
-          ))}
+        <div className="p-4 bg-black/80">
+          <Swiper
+            modules={[FreeMode, Navigation]}
+            freeMode={true}
+            slidesPerView="auto"
+            spaceBetween={8}
+            className="w-full"
+            initialSlide={currentIndex}
+          >
+            {images.map((image, index) => (
+              <SwiperSlide
+                key={index}
+                style={{ width: "80px", height: "80px" }}
+              >
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (onGoToIndex) {
+                      onGoToIndex(index);
+                    }
+                    setZoom(1);
+                  }}
+                  className={`relative w-full h-full rounded-lg overflow-hidden border-2 transition-colors ${
+                    index === currentIndex
+                      ? "border-white"
+                      : "border-transparent hover:border-white/50"
+                  }`}
+                >
+                  <Image
+                    src={image}
+                    alt={`Thumbnail ${index + 1}`}
+                    fill
+                    className="object-cover"
+                  />
+                </button>
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
       )}
     </div>
