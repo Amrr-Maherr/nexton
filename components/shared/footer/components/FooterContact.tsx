@@ -33,10 +33,12 @@ const FooterContact = memo(function FooterContact({
           <li key={index}>
             <Link
               href={item.href}
-              className="flex items-center gap-3 opacity-70 hover:opacity-100 transition-colors duration-300 text-sm"
+              className="flex items-start gap-3 text-sm text-muted-foreground hover:text-primary transition-colors group"
             >
-              <item.icon className="h-5 w-5 flex-shrink-0" />
-              <span>{item.text}</span>
+              <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
+                <item.icon className="h-4 w-4 text-primary" />
+              </div>
+              <span className="mt-0.5">{item.text}</span>
             </Link>
           </li>
         ))}

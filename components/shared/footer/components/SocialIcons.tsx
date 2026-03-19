@@ -21,7 +21,7 @@ const SocialIcons = memo(function SocialIcons() {
         <a
           key={social.label}
           href={social.href}
-          className="bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white p-2.5 rounded-full transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-gray-500"
+          className="w-10 h-10 rounded-xl bg-primary/10 hover:bg-primary text-primary hover:text-primary-foreground flex items-center justify-center transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-primary/20"
           aria-label={social.label}
           target="_blank"
           rel="noopener noreferrer"

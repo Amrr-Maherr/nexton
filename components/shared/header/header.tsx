@@ -21,7 +21,7 @@ const Header = memo(function Header({ className }: HeaderProps) {
   return (
     <header
       className={cn(
-        "bg-white border-b border-gray-200 sticky top-0 z-50",
+        "bg-card border-b sticky top-0 z-50 backdrop-blur supports-[backdrop-blur]:bg-card/80",
         className,
       )}
     >

@@ -1,4 +1,5 @@
 import { memo } from "react";
+import Link from "next/link";
 
 interface FooterCompanyProps {
   companyName?: string;
@@ -11,8 +12,14 @@ const FooterCompany = memo(function FooterCompany({
 }: FooterCompanyProps) {
   return (
     <div className="space-y-4">
-      <h2 className="text-2xl font-bold">{companyName}</h2>
-      <p className="text-sm opacity-70">{companyDescription}</p>
+      <Link href="/" className="inline-block">
+        <h2 className="text-2xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+          {companyName}
+        </h2>
+      </Link>
+      <p className="text-sm text-muted-foreground leading-relaxed">
+        {companyDescription}
+      </p>
     </div>
   );
 });

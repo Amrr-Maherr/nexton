@@ -1,4 +1,5 @@
 import { memo } from "react";
+import { CreditCard } from "lucide-react";
 
 interface PaymentMethod {
   name: string;
@@ -25,12 +26,13 @@ const FooterBottom = memo(function FooterBottom({
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           {/* Payment Methods */}
           <div className="flex items-center gap-3">
-            <span className="text-sm opacity-70">We accept:</span>
+            <CreditCard className="h-5 w-5 text-muted-foreground" />
+            <span className="text-sm text-muted-foreground">We accept:</span>
             <div className="flex gap-2">
               {paymentMethods.map((method) => (
                 <div
                   key={method.name}
-                  className="bg-secondary/50 px-3 py-1.5 rounded text-sm"
+                  className="bg-secondary/50 px-3 py-1.5 rounded-lg text-sm"
                   title={method.name}
                 >
                   {method.icon}
@@ -40,7 +42,7 @@ const FooterBottom = memo(function FooterBottom({
           </div>
 
           {/* Copyright */}
-          <p className="text-sm opacity-70">
+          <p className="text-sm text-muted-foreground">
             © {new Date().getFullYear()} {companyName}. All rights reserved.
           </p>
         </div>

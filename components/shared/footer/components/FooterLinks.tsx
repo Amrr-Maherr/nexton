@@ -1,5 +1,6 @@
 import { memo } from "react";
 import Link from "next/link";
+import { ChevronRight } from "lucide-react";
 
 interface FooterLink {
   label: string;
@@ -29,8 +30,9 @@ const FooterLinks = memo(function FooterLinks({
           <li key={link.label}>
             <Link
               href={link.href}
-              className="opacity-70 hover:opacity-100 transition-colors duration-300 text-sm hover:underline"
+              className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors group"
             >
+              <ChevronRight className="h-4 w-4 shrink-0 group-hover:translate-x-1 transition-transform" />
               {link.label}
             </Link>
           </li>
