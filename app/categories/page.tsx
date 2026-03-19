@@ -5,7 +5,6 @@ import { useCategories } from "@/hooks/api";
 
 export default function CategoriesPage() {
   const { data: categories, isLoading, error } = useCategories();
-
   if (isLoading) {
     return (
       <div className="main_container py-8">

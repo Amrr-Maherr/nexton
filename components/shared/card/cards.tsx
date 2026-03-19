@@ -58,7 +58,7 @@ export function ProductCard({
   rating,
   href,
 }: ProductCardProps) {
-  const linkHref = href || `/products/${slug}-${id}`;
+  const linkHref = href || `/product/${slug}-${id}`;
   const hasDiscount = priceAfterDiscount && priceAfterDiscount < price;
 
   return (

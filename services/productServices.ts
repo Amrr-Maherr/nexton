@@ -1,4 +1,4 @@
-import { ProductsResponse } from './../types/product';
+import { Product, ProductsResponse } from './../types/product';
 import axios from "axios";
 
 const BaseUrl = process.env.NEXT_PUBLIC_BASE_URL;
@@ -9,6 +9,15 @@ export const GetAllProducts = async (Filters?: Record<string, string>): Promise<
         const response = await axios.get<ProductsResponse>(`${BaseUrl}${ProductsEndPoint}`, {
             params: Filters
         });
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+export const GetSingleProducts = async (id?: Record<string, string>): Promise<Product> => {
+    try {
+        const response = await axios.get<Product>(`${BaseUrl}${ProductsEndPoint}/${id}`);
         return response.data;
     } catch (error) {
         console.log(error);
