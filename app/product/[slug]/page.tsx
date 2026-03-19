@@ -1,40 +1,16 @@
 "use client";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import { GetSingleProducts } from "@/services/productServices";
 import { parseProductSlug } from "@/utils/parseProductSlug";
-import type { Product } from "@/types/product";
+import { useProduct } from "@/hooks/api";
 
 export default function ProductPage() {
   const params = useParams();
   const { slug } = params;
   const { id, slug: productSlug } = parseProductSlug(slug as string);
 
-  const [product, setProduct] = useState<Product | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { data: product, isLoading, error } = useProduct(id as string);
 
-  useEffect(() => {
-    if (!id) return;
-
-    const fetchProduct = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        const data = await GetSingleProducts(id as string);
-        setProduct(data);
-      } catch (err) {
-        setError("Failed to load product");
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProduct();
-  }, [id]);
-
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="main_container py-8">
         <p className="text-center opacity-70">Loading product...</p>
@@ -46,7 +22,7 @@ export default function ProductPage() {
     return (
       <div className="main_container py-8">
         <p className="text-center text-red-500">
-          {error || "Product not found"}
+          {error ? "Failed to load product" : "Product not found"}
         </p>
       </div>
     );
