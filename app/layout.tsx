@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/shared/header/header";
 import Footer from "@/components/shared/footer/footer";
 import AppProviders from "@/context/AppProviders";
+import PageTransition from "@/components/shared/PageTransition";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -27,7 +28,11 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <AppProviders>
           <Header />
-          <main className="flex-1">{children}</main>
+          <main className="flex-1">
+            <PageTransition animation="slideUp" duration={0.4}>
+              {children}
+            </PageTransition>
+          </main>
           <Footer />
         </AppProviders>
       </body>
