@@ -1,4 +1,5 @@
 import { memo } from "react";
+import Link from "next/link";
 import { Mail, Phone, MapPin } from "lucide-react";
 
 interface ContactItem {
@@ -30,13 +31,13 @@ const FooterContact = memo(function FooterContact({
       <ul className="space-y-3">
         {contactInfo.map((item, index) => (
           <li key={index}>
-            <a
+            <Link
               href={item.href}
               className="flex items-center gap-3 text-gray-400 hover:text-white transition-colors duration-300 text-sm"
             >
               <item.icon className="h-5 w-5 flex-shrink-0" />
               <span>{item.text}</span>
-            </a>
+            </Link>
           </li>
         ))}
       </ul>

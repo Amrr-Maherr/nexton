@@ -1,4 +1,5 @@
 import { memo } from "react";
+import Link from "next/link";
 
 interface FooterLink {
   label: string;
@@ -26,12 +27,12 @@ const FooterLinks = memo(function FooterLinks({
       <ul className="space-y-2">
         {links.map((link) => (
           <li key={link.label}>
-            <a
+            <Link
               href={link.href}
               className="text-gray-400 hover:text-white transition-colors duration-300 text-sm hover:underline"
             >
               {link.label}
-            </a>
+            </Link>
           </li>
         ))}
       </ul>
