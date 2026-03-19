@@ -9,6 +9,7 @@ import {
   ProductDetails,
   BrandCategory,
   Reviews,
+  Questions,
 } from "@/components/product";
 
 export default function ProductPage() {
@@ -76,6 +77,11 @@ export default function ProductPage() {
           brand={productData.brand}
           category={productData.category}
         />
+      </div>
+
+      {/* Questions & Answers */}
+      <div className="mb-8">
+        <Questions questions={productData.questions} />
       </div>
 
       {/* Reviews */}
