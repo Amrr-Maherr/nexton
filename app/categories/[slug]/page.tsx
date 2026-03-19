@@ -56,15 +56,15 @@ export default function CategoryDetailPage() {
   return (
     <div className="main_container py-8">
       {/* Category Header - Hero Section */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-vibrant/10 via-vibrant/5 to-transparent mb-8">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/10 via-primary/5 to-transparent mb-8">
         <div className="grid md:grid-cols-2 gap-8 p-6 md:p-10">
           {/* Category Image */}
-          <div className="relative aspect-square md:aspect-auto md:h-80 rounded-xl overflow-hidden shadow-lg mx-auto w-full max-w-sm">
+          <div className="relative aspect-square md:aspect-auto md:h-80 rounded-xl overflow-hidden bg-white shadow-lg mx-auto w-full max-w-sm">
             <Image
               src={category.image}
               alt={category.name}
               fill
-              className="object-cover"
+              className="object-cover p-4"
               priority
             />
           </div>
@@ -73,7 +73,7 @@ export default function CategoryDetailPage() {
           <div className="flex flex-col justify-center text-center md:text-left space-y-6">
             <div>
               <div className="flex items-center justify-center md:justify-start gap-3 mb-3">
-                <div className="w-12 h-12 rounded-full bg-vibrant text-white flex items-center justify-center">
+                <div className="w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center">
                   <Tag className="h-6 w-6" />
                 </div>
                 <span className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
@@ -84,7 +84,7 @@ export default function CategoryDetailPage() {
                 {category.name}
               </h1>
               <p className="text-lg text-muted-foreground flex items-center justify-center md:justify-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-vibrant" />/
+                <span className="w-1.5 h-1.5 rounded-full bg-primary" />/
                 {category.slug}
               </p>
             </div>
@@ -92,7 +92,7 @@ export default function CategoryDetailPage() {
             <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
               <Link
                 href="/products"
-                className="inline-flex items-center justify-center gap-2 bg-vibrant text-white px-8 py-3.5 rounded-xl font-semibold hover:opacity-90 transition-opacity shadow-lg shadow-vibrant/25"
+                className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-3.5 rounded-xl font-semibold hover:opacity-90 transition-opacity shadow-lg shadow-primary/25"
               >
                 <Package className="h-5 w-5" />
                 Browse Products
@@ -113,8 +113,8 @@ export default function CategoryDetailPage() {
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <div className="border rounded-xl p-5 bg-card shadow-sm">
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 rounded-lg bg-vibrant/10 flex items-center justify-center">
-              <Tag className="h-5 w-5 text-vibrant" />
+            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+              <Tag className="h-5 w-5 text-primary" />
             </div>
             <p className="text-sm text-muted-foreground">Category Name</p>
           </div>
@@ -123,8 +123,8 @@ export default function CategoryDetailPage() {
 
         <div className="border rounded-xl p-5 bg-card shadow-sm">
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 rounded-lg bg-vibrant/10 flex items-center justify-center">
-              <Calendar className="h-5 w-5 text-vibrant" />
+            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+              <Calendar className="h-5 w-5 text-primary" />
             </div>
             <p className="text-sm text-muted-foreground">Created</p>
           </div>
@@ -133,8 +133,8 @@ export default function CategoryDetailPage() {
 
         <div className="border rounded-xl p-5 bg-card shadow-sm">
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 rounded-lg bg-vibrant/10 flex items-center justify-center">
-              <Clock className="h-5 w-5 text-vibrant" />
+            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+              <Clock className="h-5 w-5 text-primary" />
             </div>
             <p className="text-sm text-muted-foreground">Last Updated</p>
           </div>
@@ -143,8 +143,8 @@ export default function CategoryDetailPage() {
 
         <div className="border rounded-xl p-5 bg-card shadow-sm">
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 rounded-lg bg-vibrant/10 flex items-center justify-center">
-              <Package className="h-5 w-5 text-vibrant" />
+            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+              <Package className="h-5 w-5 text-primary" />
             </div>
             <p className="text-sm text-muted-foreground">Slug</p>
           </div>
@@ -155,7 +155,7 @@ export default function CategoryDetailPage() {
       {/* Additional Info */}
       <div className="border rounded-xl p-6 bg-card shadow-sm mb-8">
         <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
-          <div className="w-1 h-6 bg-vibrant rounded-full" />
+          <div className="w-1 h-6 bg-primary rounded-full" />
           Category Information
         </h2>
         <div className="grid md:grid-cols-2 gap-6">
@@ -175,7 +175,7 @@ export default function CategoryDetailPage() {
       </div>
 
       {/* Browse All */}
-      <div className="border rounded-xl p-6 bg-gradient-to-r from-vibrant/5 to-transparent">
+      <div className="border rounded-xl p-6 bg-gradient-to-r from-primary/5 to-transparent">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <div>
             <h2 className="text-xl font-bold mb-1">Browse All Categories</h2>
@@ -185,7 +185,7 @@ export default function CategoryDetailPage() {
           </div>
           <Link
             href="/categories"
-            className="inline-flex items-center gap-2 text-vibrant font-semibold hover:underline whitespace-nowrap"
+            className="inline-flex items-center gap-2 text-primary font-semibold hover:underline whitespace-nowrap"
           >
             View all categories
             <ArrowRight className="h-5 w-5" />
