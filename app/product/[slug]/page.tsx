@@ -67,7 +67,7 @@ export default function ProductPage() {
           </div>
           <div className="flex items-center gap-2">
             <span className="text-yellow-500">⭐</span>
-            <span>{product.ratingsAverage.toFixed(1)}</span>
+            <span>{product.ratingsAverage?.toFixed(1) || "N/A"}</span>
             <span className="opacity-70">
               ({product.ratingsQuantity} reviews)
             </span>
@@ -75,11 +75,12 @@ export default function ProductPage() {
           <p className="opacity-70">{product.description}</p>
           <div className="space-y-2">
             <p>
-              <span className="font-semibold">Brand:</span> {product.brand.name}
+              <span className="font-semibold">Brand:</span>{" "}
+              {product.brand?.name || "N/A"}
             </p>
             <p>
               <span className="font-semibold">Category:</span>{" "}
-              {product.category.name}
+              {product.category?.name || "N/A"}
             </p>
             <p>
               <span className="font-semibold">Available:</span>{" "}
