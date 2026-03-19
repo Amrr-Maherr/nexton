@@ -77,21 +77,25 @@ export default function ProductPage() {
       {/* Product Gallery */}
       {/* <ProductGallery images={product.images} title={product.title} /> */}
 
-      {/* Additional Info */}
-      <div className="grid md:grid-cols-2 gap-8 mb-8">
+      {/* Brand & Category */}
+      <div className="mb-8">
+        <Suspense fallback={<SkeletonFallback />}>
+          <LazyWrapper height={300}>
+            <BrandCategory brand={product.brand} category={product.category} />
+          </LazyWrapper>
+        </Suspense>
+      </div>
+
+      {/* Product Details */}
+      <div className="mb-8">
         <Suspense fallback={<SkeletonFallback />}>
           <LazyWrapper height={300}>
             <ProductDetails
-              id={product.id}
+              id={id as string}
               slug={product.slug}
               createdAt={product.createdAt}
               updatedAt={product.updatedAt}
             />
-          </LazyWrapper>
-        </Suspense>
-        <Suspense fallback={<SkeletonFallback />}>
-          <LazyWrapper height={300}>
-            <BrandCategory brand={product.brand} category={product.category} />
           </LazyWrapper>
         </Suspense>
       </div>
