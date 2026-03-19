@@ -145,11 +145,15 @@ const Slider = memo(function Slider({
         className={`mySwiper ${className || ""}`}
         {...swiperOptions}
       >
-        {React.Children.map(children, (child, index) => (
-          <SwiperSlide key={index} virtualIndex={index}>
-            {child}
-          </SwiperSlide>
-        ))}
+        {React.Children.map(children, (child, index) => {
+          // Get the key from the child element if it exists, otherwise use index
+          const key = (child as React.ReactElement).key ?? index;
+          return (
+            <SwiperSlide key={key} virtualIndex={index}>
+              {child}
+            </SwiperSlide>
+          );
+        })}
       </Swiper>
 
       {!hideNavigation && (
