@@ -4,13 +4,7 @@ import { useRef, useMemo, memo, useCallback } from "react";
 import * as React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { SwiperOptions } from "swiper/types";
-import {
-  Pagination,
-  Autoplay,
-  Navigation,
-  EffectFade,
-  Virtual,
-} from "swiper/modules";
+import { Pagination, Autoplay, Navigation, EffectFade } from "swiper/modules";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 // Import Swiper CSS modules
@@ -31,7 +25,6 @@ interface SliderProps {
     | typeof Autoplay
     | typeof Navigation
     | typeof EffectFade
-    | typeof Virtual
   )[];
   useFadeEffect?: boolean;
   hideNavigation?: boolean;
@@ -84,8 +77,8 @@ const Slider = memo(function Slider({
   const activeModules = useMemo(
     () =>
       useFadeEffect
-        ? [...modules, EffectFade, Navigation, Virtual]
-        : [...modules, Navigation, Virtual],
+        ? [...modules, EffectFade, Navigation]
+        : [...modules, Navigation],
     [modules, useFadeEffect],
   );
 
@@ -141,15 +134,16 @@ const Slider = memo(function Slider({
         grabCursor={true}
         allowSlideNext={true}
         allowSlidePrev={true}
-        virtual={true}
         className={`mySwiper ${className || ""}`}
         {...swiperOptions}
       >
         {React.Children.map(children, (child, index) => {
-          // Get the key from the child element if it exists, otherwise use index
-          const key = (child as React.ReactElement).key ?? index;
+          // Use the child's key if it exists, otherwise generate a unique key
+          const childKey = (child as React.ReactElement).key;
+          const uniqueKey =
+            childKey !== undefined ? childKey : `slide-${index}`;
           return (
-            <SwiperSlide key={key} virtualIndex={index}>
+            <SwiperSlide key={uniqueKey} virtualIndex={index}>
               {child}
             </SwiperSlide>
           );
