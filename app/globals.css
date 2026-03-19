@@ -48,6 +48,13 @@
 }
 
 :root {
+  --text-hero: 64px;
+  --text-title: 36px;
+  --text-subtitle: 24px;
+  --text-body: 16px;
+  --text-small: 14px;
+  --primary: #111827;
+  --secondary: #4B5563;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -120,9 +127,15 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+
+  .main_container {
+    @apply md:px-30 px-6 mx-auto;
+  }
+
   html {
     @apply font-sans;
   }
