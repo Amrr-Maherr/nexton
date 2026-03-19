@@ -1,11 +1,11 @@
 "use client";
-import { handelUrl } from "@/utils/handelUrl";
+import { parseProductSlug } from "@/utils/handelUrl";
 import { useParams } from "next/navigation";
 
 export default function ProductPage() {
   const params = useParams();
   const { slug } = params;
-  const { id, slug: productSlug } = handelUrl(slug as string);
+  const { id, slug: productSlug } = parseProductSlug(slug as string);
 
   return (
     <div>
