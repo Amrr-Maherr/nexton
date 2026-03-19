@@ -1,3 +1,3 @@
-export { CategoryCard } from "./category-card";
-export { ProductCard } from "./category-card";
-export { BrandCard } from "./category-card";
+export { CategoryCard } from "./cards";
+export { ProductCard } from "./cards";
+export { BrandCard } from "./cards";
