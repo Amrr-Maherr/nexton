@@ -1,6 +1,7 @@
 import { memo } from "react";
 import { Search, Heart, ShoppingCart, User } from "lucide-react";
 import ActionIconButton from "./ActionIconButton";
+import SideDrawer from "./SideDrawer";
 
 interface ActionIconsProps {
   wishlistCount?: number;
@@ -29,18 +30,18 @@ const ActionIcons = memo(function ActionIcons({
       )}
 
       {/* Wishlist */}
-      <ActionIconButton
-        icon={Heart}
-        label="Wishlist"
-        badge={wishlistCount}
-      />
+      <SideDrawer type="wishlist" side="right">
+        <ActionIconButton icon={Heart} label="Wishlist" badge={wishlistCount} />
+      </SideDrawer>
 
       {/* Cart */}
-      <ActionIconButton
-        icon={ShoppingCart}
-        label="Shopping Cart"
-        badge={cartCount}
-      />
+      <SideDrawer type="cart" side="right">
+        <ActionIconButton
+          icon={ShoppingCart}
+          label="Shopping Cart"
+          badge={cartCount}
+        />
+      </SideDrawer>
 
       {/* Account */}
       <ActionIconButton icon={User} label="Account" />
