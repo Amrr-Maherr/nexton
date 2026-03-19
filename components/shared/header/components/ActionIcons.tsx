@@ -30,7 +30,7 @@ const ActionIcons = memo(function ActionIcons({
       )}
 
       {/* Wishlist */}
-      <SideDrawer type="wishlist" side="right">
+      <SideDrawer type="wishlist" side="left">
         <ActionIconButton icon={Heart} label="Wishlist" badge={wishlistCount} />
       </SideDrawer>
 

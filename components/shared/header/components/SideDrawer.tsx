@@ -99,12 +99,12 @@ const SideDrawer = memo(function SideDrawer({
               )}
               {title}
             </SheetTitle>
-            <SheetClose asChild>
+            {/* <SheetClose asChild>
               <Button variant="ghost" size="icon" className="h-8 w-8">
                 <X className="h-4 w-4" />
                 <span className="sr-only">Close</span>
               </Button>
-            </SheetClose>
+            </SheetClose> */}
           </div>
         </SheetHeader>
 
