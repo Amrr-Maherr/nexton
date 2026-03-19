@@ -3,13 +3,13 @@ import { useParams } from "next/navigation";
 import { useCategory } from "@/hooks/api";
 import Image from "next/image";
 import Link from "next/link";
-import { CategoryCard, ProductCard } from "@/components/shared/card";
+import { parseProductSlug } from "@/utils/parseProductSlug";
 
 export default function CategoryDetailPage() {
   const params = useParams();
   const { slug } = params;
-
-  const { data: category, isLoading, error } = useCategory(slug as string);
+  const { id, slug: productSlug } = parseProductSlug(slug as string);
+  const { data: category, isLoading, error } = useCategory(id as string);
 
   if (isLoading) {
     return (

@@ -3,12 +3,13 @@ import { useParams } from "next/navigation";
 import { useBrand } from "@/hooks/api";
 import Image from "next/image";
 import Link from "next/link";
+import { parseProductSlug } from "@/utils/parseProductSlug";
 
 export default function BrandDetailPage() {
   const params = useParams();
   const { slug } = params;
-
-  const { data: brand, isLoading, error } = useBrand(slug as string);
+  const { id, slug: productSlug } = parseProductSlug(slug as string);
+  const { data: brand, isLoading, error } = useBrand(id as string);
 
   if (isLoading) {
     return (
