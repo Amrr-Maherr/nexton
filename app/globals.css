@@ -55,7 +55,10 @@
   --text-small: 14px;
   --primary: #111827;
   --secondary: #4B5563;
-  --background: oklch(1 0 0);
+  --Vibrant: #0EA5E9;
+  --border: #E5E7EB;
+  --background:#FFFFFF;
+  --gray-background:#F8F8F8;
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
