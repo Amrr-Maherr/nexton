@@ -19,7 +19,7 @@ export default function ProductPage() {
     );
   }
 
-  if (error || !product) {
+  if (error || !product?.data) {
     return (
       <div className="main_container py-8">
         <p className="text-center text-red-500">
@@ -29,37 +29,39 @@ export default function ProductPage() {
     );
   }
 
+  const productData = product.data;
+
   return (
     <div className="main_container py-8">
       {/* Product Images */}
       <div className="grid md:grid-cols-2 gap-8 mb-8">
         <div className="relative aspect-square rounded-lg overflow-hidden bg-secondary/50">
           <Image
-            src={product.imageCover}
-            alt={product.title}
+            src={productData.imageCover}
+            alt={productData.title}
             fill
             className="object-cover"
             priority
           />
         </div>
         <div className="space-y-4">
-          <h1 className="text-3xl font-bold">{product.title}</h1>
+          <h1 className="text-3xl font-bold">{productData.title}</h1>
 
           {/* Price */}
           <div className="flex items-center gap-4">
             <span className="text-2xl font-semibold text-primary">
-              ${product.price}
+              ${productData.price}
             </span>
-            {product.priceAfterDiscount && (
+            {productData.priceAfterDiscount && (
               <>
                 <span className="text-lg opacity-50 line-through">
-                  ${product.priceAfterDiscount}
+                  ${productData.priceAfterDiscount}
                 </span>
                 <span className="bg-red-500 text-white px-2 py-1 rounded text-sm">
                   -
                   {Math.round(
-                    ((product.price - product.priceAfterDiscount) /
-                      product.price) *
+                    ((productData.price - productData.priceAfterDiscount) /
+                      productData.price) *
                       100,
                   )}
                   %
@@ -71,59 +73,60 @@ export default function ProductPage() {
           {/* Rating */}
           <div className="flex items-center gap-2">
             <span className="text-yellow-500">⭐</span>
-            <span>{product.ratingsAverage?.toFixed(1) || "N/A"}</span>
+            <span>{productData.ratingsAverage?.toFixed(1) || "N/A"}</span>
             <span className="opacity-70">
-              ({product.ratingsQuantity} reviews)
+              ({productData.ratingsQuantity} reviews)
             </span>
           </div>
 
           {/* Description */}
           <p className="opacity-70 whitespace-pre-line">
-            {product.description}
+            {productData.description}
           </p>
 
           {/* Product Info */}
           <div className="space-y-2">
             <p>
               <span className="font-semibold">Brand:</span>{" "}
-              {product.brand?.name || "N/A"}
+              {productData.brand?.name || "N/A"}
             </p>
             <p>
               <span className="font-semibold">Category:</span>{" "}
-              {product.category?.name || "N/A"}
+              {productData.category?.name || "N/A"}
             </p>
             <p>
               <span className="font-semibold">Subcategory:</span>{" "}
-              {product.subcategory?.[0]?.name || "N/A"}
+              {productData.subcategory?.[0]?.name || "N/A"}
             </p>
             <p>
               <span className="font-semibold">Available:</span>{" "}
-              {product.quantity > 0 ? "In Stock" : "Out of Stock"}
+              {productData.quantity > 0 ? "In Stock" : "Out of Stock"}
             </p>
             <p>
               <span className="font-semibold">Quantity:</span>{" "}
-              {product.quantity}
+              {productData.quantity}
             </p>
             <p>
-              <span className="font-semibold">Sold:</span> {product.sold || 0}
+              <span className="font-semibold">Sold:</span>{" "}
+              {productData.sold || 0}
             </p>
           </div>
         </div>
       </div>
 
       {/* Product Gallery */}
-      {product?.images?.length > 1 && (
+      {productData?.images?.length > 1 && (
         <div className="mb-8">
           <h2 className="text-xl font-bold mb-4">Gallery</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {product.images.map((image, index) => (
+            {productData.images.map((image, index) => (
               <div
                 key={index}
                 className="relative aspect-square rounded-lg overflow-hidden bg-secondary/50"
               >
                 <Image
                   src={image}
-                  alt={`${product.title} ${index + 1}`}
+                  alt={`${productData.title} ${index + 1}`}
                   fill
                   className="object-cover"
                 />
@@ -140,18 +143,19 @@ export default function ProductPage() {
           <h2 className="text-xl font-bold mb-4">Product Details</h2>
           <div className="space-y-2 text-sm">
             <p>
-              <span className="font-semibold">Product ID:</span> {product.id}
+              <span className="font-semibold">Product ID:</span>{" "}
+              {productData.id}
             </p>
             <p>
-              <span className="font-semibold">Slug:</span> {product.slug}
+              <span className="font-semibold">Slug:</span> {productData.slug}
             </p>
             <p>
               <span className="font-semibold">Created:</span>{" "}
-              {new Date(product.createdAt).toLocaleDateString()}
+              {new Date(productData.createdAt).toLocaleDateString()}
             </p>
             <p>
               <span className="font-semibold">Updated:</span>{" "}
-              {new Date(product.updatedAt).toLocaleDateString()}
+              {new Date(productData.updatedAt).toLocaleDateString()}
             </p>
           </div>
         </div>
@@ -160,35 +164,39 @@ export default function ProductPage() {
         <div className="border rounded-lg p-4">
           <h2 className="text-xl font-bold mb-4">Brand & Category</h2>
           <div className="space-y-4">
-            {product.brand && (
+            {productData.brand && (
               <div className="flex items-center gap-3">
                 <div className="relative w-12 h-12 rounded-lg overflow-hidden bg-secondary/50">
                   <Image
-                    src={product.brand.image}
-                    alt={product.brand.name}
+                    src={productData.brand.image}
+                    alt={productData.brand.name}
                     fill
                     className="object-cover"
                   />
                 </div>
                 <div>
-                  <p className="font-semibold">{product.brand.name}</p>
-                  <p className="text-sm opacity-70">/{product.brand.slug}</p>
+                  <p className="font-semibold">{productData.brand.name}</p>
+                  <p className="text-sm opacity-70">
+                    /{productData.brand.slug}
+                  </p>
                 </div>
               </div>
             )}
-            {product.category && (
+            {productData.category && (
               <div className="flex items-center gap-3">
                 <div className="relative w-12 h-12 rounded-lg overflow-hidden bg-secondary/50">
                   <Image
-                    src={product.category.image}
-                    alt={product.category.name}
+                    src={productData.category.image}
+                    alt={productData.category.name}
                     fill
                     className="object-cover"
                   />
                 </div>
                 <div>
-                  <p className="font-semibold">{product.category.name}</p>
-                  <p className="text-sm opacity-70">/{product.category.slug}</p>
+                  <p className="font-semibold">{productData.category.name}</p>
+                  <p className="text-sm opacity-70">
+                    /{productData.category.slug}
+                  </p>
                 </div>
               </div>
             )}
@@ -197,13 +205,13 @@ export default function ProductPage() {
       </div>
 
       {/* Reviews */}
-      {product.reviews && product.reviews.length > 0 && (
+      {productData.reviews && productData.reviews.length > 0 && (
         <div>
           <h2 className="text-xl font-bold mb-4">
-            Reviews ({product.reviews.length})
+            Reviews ({productData.reviews.length})
           </h2>
           <div className="space-y-4">
-            {product.reviews.map((review) => (
+            {productData.reviews.map((review) => (
               <div key={review._id} className="border rounded-lg p-4">
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
