@@ -62,7 +62,7 @@ export default function ProductPage() {
       </div>
 
       {/* Product Gallery */}
-      <ProductGallery images={product.images} title={product.title} />
+      {/* <ProductGallery images={product.images} title={product.title} /> */}
 
       {/* Additional Info */}
       <div className="grid md:grid-cols-2 gap-8 mb-8">

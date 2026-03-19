@@ -32,6 +32,10 @@ export function ProductImages({
     setLightboxIndex((prev) => (prev === allImages.length - 1 ? 0 : prev + 1));
   };
 
+  const handleGoToIndex = (index: number) => {
+    setLightboxIndex(index);
+  };
+
   return (
     <>
       <div className="space-y-4">
@@ -85,6 +89,7 @@ export function ProductImages({
           onClose={() => setIsLightboxOpen(false)}
           onPrevious={handlePrevious}
           onNext={handleNext}
+          onGoToIndex={handleGoToIndex}
         />
       )}
     </>
