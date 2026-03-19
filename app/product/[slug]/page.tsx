@@ -41,7 +41,11 @@ export default function ProductPage() {
     <div className="main_container py-8">
       {/* Product Images & Info */}
       <div className="grid md:grid-cols-2 gap-8 mb-8">
-        <ProductImages imageCover={product.imageCover} title={product.title} />
+        <ProductImages
+          imageCover={product.imageCover}
+          title={product.title}
+          images={product.images}
+        />
         <ProductInfo
           title={product.title}
           price={product.price}

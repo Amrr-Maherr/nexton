@@ -7,3 +7,4 @@ export { Reviews } from "./Reviews";
 export { AddReview } from "./AddReview";
 export { AddQuestion } from "./AddQuestion";
 export { Questions } from "./Questions";
+export { Lightbox } from "./Lightbox";
