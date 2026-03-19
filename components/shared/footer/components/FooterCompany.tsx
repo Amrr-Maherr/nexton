@@ -11,8 +11,8 @@ const FooterCompany = memo(function FooterCompany({
 }: FooterCompanyProps) {
   return (
     <div className="space-y-4">
-      <h2 className="text-2xl font-bold text-white">{companyName}</h2>
-      <p className="text-sm text-gray-400">{companyDescription}</p>
+      <h2 className="text-2xl font-bold">{companyName}</h2>
+      <p className="text-sm opacity-70">{companyDescription}</p>
     </div>
   );
 });

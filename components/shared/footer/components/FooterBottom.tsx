@@ -20,17 +20,17 @@ const FooterBottom = memo(function FooterBottom({
   ],
 }: FooterBottomProps) {
   return (
-    <div className="border-t border-gray-800">
+    <div className="border-t">
       <div className="main_container py-6">
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           {/* Payment Methods */}
           <div className="flex items-center gap-3">
-            <span className="text-sm text-gray-400">We accept:</span>
+            <span className="text-sm opacity-70">We accept:</span>
             <div className="flex gap-2">
               {paymentMethods.map((method) => (
                 <div
                   key={method.name}
-                  className="bg-gray-800 px-3 py-1.5 rounded text-sm"
+                  className="bg-secondary/50 px-3 py-1.5 rounded text-sm"
                   title={method.name}
                 >
                   {method.icon}
@@ -40,7 +40,7 @@ const FooterBottom = memo(function FooterBottom({
           </div>
 
           {/* Copyright */}
-          <p className="text-sm text-gray-400">
+          <p className="text-sm opacity-70">
             © {new Date().getFullYear()} {companyName}. All rights reserved.
           </p>
         </div>

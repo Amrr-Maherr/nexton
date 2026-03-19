@@ -24,19 +24,19 @@ const FooterNewsletter = memo(function FooterNewsletter({
 
   return (
     <div className="space-y-4">
-      <h3 className="text-lg font-semibold text-white">{title}</h3>
-      <p className="text-sm text-gray-400">{description}</p>
+      <h3 className="text-lg font-semibold">{title}</h3>
+      <p className="text-sm opacity-70">{description}</p>
       <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
         <input
           type="email"
           placeholder={placeholder}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="bg-gray-800 border border-gray-700 text-white px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 text-sm"
+          className="bg-secondary/50 border border-border px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-primary"
         />
         <button
           type="submit"
-          className="bg-white text-gray-900 px-4 py-2.5 rounded-lg font-medium hover:bg-gray-100 transition-colors duration-300 text-sm"
+          className="bg-primary text-primary-foreground px-4 py-2.5 rounded-lg font-medium hover:opacity-90 transition-colors duration-300 text-sm"
         >
           {buttonText}
         </button>

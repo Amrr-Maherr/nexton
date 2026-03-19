@@ -23,13 +23,13 @@ const FooterLinks = memo(function FooterLinks({
 }: FooterLinksProps) {
   return (
     <div className="space-y-4">
-      <h3 className="text-lg font-semibold text-white">{title}</h3>
+      <h3 className="text-lg font-semibold">{title}</h3>
       <ul className="space-y-2">
         {links.map((link) => (
           <li key={link.label}>
             <Link
               href={link.href}
-              className="text-gray-400 hover:text-white transition-colors duration-300 text-sm hover:underline"
+              className="opacity-70 hover:opacity-100 transition-colors duration-300 text-sm hover:underline"
             >
               {link.label}
             </Link>
