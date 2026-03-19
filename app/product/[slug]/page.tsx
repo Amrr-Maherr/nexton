@@ -44,6 +44,8 @@ export default function ProductPage() {
         </div>
         <div className="space-y-4">
           <h1 className="text-3xl font-bold">{product.title}</h1>
+
+          {/* Price */}
           <div className="flex items-center gap-4">
             <span className="text-2xl font-semibold text-primary">
               ${product.price}
@@ -65,6 +67,8 @@ export default function ProductPage() {
               </>
             )}
           </div>
+
+          {/* Rating */}
           <div className="flex items-center gap-2">
             <span className="text-yellow-500">⭐</span>
             <span>{product.ratingsAverage?.toFixed(1) || "N/A"}</span>
@@ -72,7 +76,13 @@ export default function ProductPage() {
               ({product.ratingsQuantity} reviews)
             </span>
           </div>
-          <p className="opacity-70">{product.description}</p>
+
+          {/* Description */}
+          <p className="opacity-70 whitespace-pre-line">
+            {product.description}
+          </p>
+
+          {/* Product Info */}
           <div className="space-y-2">
             <p>
               <span className="font-semibold">Brand:</span>{" "}
@@ -83,15 +93,26 @@ export default function ProductPage() {
               {product.category?.name || "N/A"}
             </p>
             <p>
+              <span className="font-semibold">Subcategory:</span>{" "}
+              {product.subcategory?.[0]?.name || "N/A"}
+            </p>
+            <p>
               <span className="font-semibold">Available:</span>{" "}
               {product.quantity > 0 ? "In Stock" : "Out of Stock"}
+            </p>
+            <p>
+              <span className="font-semibold">Quantity:</span>{" "}
+              {product.quantity}
+            </p>
+            <p>
+              <span className="font-semibold">Sold:</span> {product.sold || 0}
             </p>
           </div>
         </div>
       </div>
 
       {/* Product Gallery */}
-      {product.images.length > 1 && (
+      {product?.images?.length > 1 && (
         <div className="mb-8">
           <h2 className="text-xl font-bold mb-4">Gallery</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -112,6 +133,69 @@ export default function ProductPage() {
         </div>
       )}
 
+      {/* Additional Info */}
+      <div className="grid md:grid-cols-2 gap-8 mb-8">
+        {/* Product Details */}
+        <div className="border rounded-lg p-4">
+          <h2 className="text-xl font-bold mb-4">Product Details</h2>
+          <div className="space-y-2 text-sm">
+            <p>
+              <span className="font-semibold">Product ID:</span> {product.id}
+            </p>
+            <p>
+              <span className="font-semibold">Slug:</span> {product.slug}
+            </p>
+            <p>
+              <span className="font-semibold">Created:</span>{" "}
+              {new Date(product.createdAt).toLocaleDateString()}
+            </p>
+            <p>
+              <span className="font-semibold">Updated:</span>{" "}
+              {new Date(product.updatedAt).toLocaleDateString()}
+            </p>
+          </div>
+        </div>
+
+        {/* Brand & Category */}
+        <div className="border rounded-lg p-4">
+          <h2 className="text-xl font-bold mb-4">Brand & Category</h2>
+          <div className="space-y-4">
+            {product.brand && (
+              <div className="flex items-center gap-3">
+                <div className="relative w-12 h-12 rounded-lg overflow-hidden bg-secondary/50">
+                  <Image
+                    src={product.brand.image}
+                    alt={product.brand.name}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div>
+                  <p className="font-semibold">{product.brand.name}</p>
+                  <p className="text-sm opacity-70">/{product.brand.slug}</p>
+                </div>
+              </div>
+            )}
+            {product.category && (
+              <div className="flex items-center gap-3">
+                <div className="relative w-12 h-12 rounded-lg overflow-hidden bg-secondary/50">
+                  <Image
+                    src={product.category.image}
+                    alt={product.category.name}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div>
+                  <p className="font-semibold">{product.category.name}</p>
+                  <p className="text-sm opacity-70">/{product.category.slug}</p>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
       {/* Reviews */}
       {product.reviews && product.reviews.length > 0 && (
         <div>
@@ -122,10 +206,25 @@ export default function ProductPage() {
             {product.reviews.map((review) => (
               <div key={review._id} className="border rounded-lg p-4">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="font-semibold">{review.user.name}</span>
-                  <span className="text-yellow-500">⭐ {review.rating}/5</span>
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-bold">
+                      {review.user.name.charAt(0).toUpperCase()}
+                    </div>
+                    <span className="font-semibold">{review.user.name}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-yellow-500">⭐</span>
+                    <span className="font-semibold">{review.rating}/5</span>
+                  </div>
                 </div>
-                {review.review && <p className="opacity-70">{review.review}</p>}
+                {review.review && (
+                  <p className="opacity-70 text-sm mt-2 pl-10">
+                    {review.review}
+                  </p>
+                )}
+                <p className="text-xs opacity-50 mt-2 pl-10">
+                  {new Date(review.createdAt).toLocaleDateString()}
+                </p>
               </div>
             ))}
           </div>
