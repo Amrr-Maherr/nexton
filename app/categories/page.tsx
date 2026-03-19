@@ -1,6 +1,5 @@
 import { GetAllCategories } from "@/services/categoryServices";
-import Link from "next/link";
-import Image from "next/image";
+import { CategoryCard } from "@/components/shared/card";
 
 export default async function CategoriesPage() {
   try {
@@ -16,24 +15,13 @@ export default async function CategoriesPage() {
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
           {categories.map((category) => (
-            <Link
+            <CategoryCard
               key={category._id}
-              href={`/categories/${category.slug}`}
-              className="group"
-            >
-              <div className="relative aspect-square overflow-hidden rounded-lg bg-secondary/50 mb-3">
-                <Image
-                  src={category.image}
-                  alt={category.name}
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-300"
-                  sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
-                />
-              </div>
-              <h3 className="font-medium text-center group-hover:opacity-70 transition-opacity">
-                {category.name}
-              </h3>
-            </Link>
+              id={category._id}
+              name={category.name}
+              slug={category.slug}
+              image={category.image}
+            />
           ))}
         </div>
 
