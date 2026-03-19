@@ -15,9 +15,9 @@ export const GetAllProducts = async (Filters?: Record<string, string>): Promise<
         throw error;
     }
 }
-export const GetSingleProducts = async (id: string): Promise<Product> => {
+export const GetSingleProducts = async (id: string): Promise<{ data: Product }> => {
     try {
-        const response = await axios.get<Product>(`${BaseUrl}${ProductsEndPoint}/${id}`);
+        const response = await axios.get<{ data: Product }>(`${BaseUrl}${ProductsEndPoint}/${id}`);
         return response.data;
     } catch (error) {
         console.log(error);
