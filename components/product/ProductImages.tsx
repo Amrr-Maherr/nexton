@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Lightbox } from "./Lightbox";
+import Slider from "@/components/shared/slider/slider";
 
 interface ProductImagesProps {
   imageCover: string;
@@ -57,15 +58,19 @@ export function ProductImages({
           </div>
         </div>
 
-        {/* Thumbnail Gallery */}
+        {/* Thumbnail Slider */}
         {allImages.length > 1 && (
-          <div className="grid grid-cols-4 gap-2">
+          <Slider
+            slidesPerView={4}
+            slidesPerViewMobile={1}
+            spaceBetween={10}
+            hideNavigation={false}
+            className="thumbnail-slider"
+          >
             {allImages.map((image, index) => (
               <div
                 key={index}
-                className={`relative aspect-square rounded-lg overflow-hidden bg-secondary/50 cursor-pointer ${
-                  index === 0 ? "ring-2 ring-primary" : ""
-                }`}
+                className={`relative aspect-square rounded-lg overflow-hidden bg-secondary/50 cursor-pointer`}
                 onClick={() => openLightbox(index)}
               >
                 <Image
@@ -77,7 +82,7 @@ export function ProductImages({
                 />
               </div>
             ))}
-          </div>
+          </Slider>
         )}
       </div>
 
