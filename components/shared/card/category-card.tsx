@@ -101,3 +101,32 @@ export function ProductCard({
     </Link>
   );
 }
+
+interface BrandCardProps {
+  id: string;
+  name: string;
+  slug: string;
+  image: string;
+  href?: string;
+}
+
+export function BrandCard({ id, name, slug, image, href }: BrandCardProps) {
+  const linkHref = href || `/brands/${slug}`;
+
+  return (
+    <Link href={linkHref} className="group">
+      <div className="relative aspect-square overflow-hidden rounded-lg bg-secondary/50 mb-3 flex items-center justify-center p-4">
+        <Image
+          src={image}
+          alt={name}
+          fill
+          className="object-contain group-hover:scale-105 transition-transform duration-300"
+          sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
+        />
+      </div>
+      <h3 className="font-medium text-center text-sm group-hover:opacity-70 transition-opacity">
+        {name}
+      </h3>
+    </Link>
+  );
+}

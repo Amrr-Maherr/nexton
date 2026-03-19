@@ -59,3 +59,9 @@ export interface CategoriesResponse {
   metadata: ProductsMetadata;
   data: Category[];
 }
+
+export interface BrandsResponse {
+  results: number;
+  metadata: ProductsMetadata;
+  data: Brand[];
+}
