@@ -20,6 +20,7 @@ interface ReviewsProps {
 
 export default function Reviews({ reviews }: ReviewsProps) {
   const [showAddReview, setShowAddReview] = useState(false);
+  const [visibleReviews, setVisibleReviews] = useState(5);
 
   const handleAddReview = (newReview: { rating: number; review: string }) => {
     console.log("New review:", newReview);
@@ -33,6 +34,11 @@ export default function Reviews({ reviews }: ReviewsProps) {
           reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length
         ).toFixed(1)
       : "0";
+
+  // Get visible reviews
+  const visibleReviewsList = reviews?.slice(0, visibleReviews) || [];
+  const hasMoreReviews = (reviews?.length || 0) > visibleReviews;
+  const remainingReviews = (reviews?.length || 0) - visibleReviews;
 
   return (
     <div className="border rounded-xl p-5 md:p-6 bg-card shadow-sm">
@@ -80,63 +86,93 @@ export default function Reviews({ reviews }: ReviewsProps) {
 
       {/* Reviews List */}
       {reviews && reviews.length > 0 ? (
-        <div className="space-y-4">
-          {reviews.map((review) => (
-            <div
-              key={review._id}
-              className="border rounded-xl p-4 md:p-5 bg-secondary/30 hover:bg-secondary/50 transition-colors"
-            >
-              {/* Review Header */}
-              <div className="flex items-start justify-between gap-4 mb-3">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-br from-primary to-primary/70 text-primary-foreground flex items-center justify-center text-base md:text-lg font-bold shrink-0">
-                    {review.user.name.charAt(0).toUpperCase()}
+        <>
+          <div className="space-y-4">
+            {visibleReviewsList.map((review) => (
+              <div
+                key={review._id}
+                className="border rounded-xl p-4 md:p-5 bg-secondary/30 hover:bg-secondary/50 transition-colors"
+              >
+                {/* Review Header */}
+                <div className="flex items-start justify-between gap-4 mb-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-br from-primary to-primary/70 text-primary-foreground flex items-center justify-center text-base md:text-lg font-bold shrink-0">
+                      {review.user.name.charAt(0).toUpperCase()}
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <User className="h-4 w-4 text-muted-foreground" />
+                        <p className="font-semibold text-sm md:text-base">
+                          {review.user.name}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-1 text-xs text-muted-foreground mt-0.5">
+                        <Calendar className="h-3 w-3" />
+                        {new Date(review.createdAt).toLocaleDateString(
+                          "en-US",
+                          {
+                            year: "numeric",
+                            month: "short",
+                            day: "numeric",
+                          },
+                        )}
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <User className="h-4 w-4 text-muted-foreground" />
-                      <p className="font-semibold text-sm md:text-base">
-                        {review.user.name}
-                      </p>
-                    </div>
-                    <div className="flex items-center gap-1 text-xs text-muted-foreground mt-0.5">
-                      <Calendar className="h-3 w-3" />
-                      {new Date(review.createdAt).toLocaleDateString("en-US", {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                      })}
-                    </div>
+
+                  {/* Rating */}
+                  <div className="flex items-center gap-1 bg-white dark:bg-gray-800 px-3 py-1.5 rounded-full shrink-0">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <Star
+                        key={star}
+                        className={`h-3.5 w-3.5 ${
+                          star <= review.rating
+                            ? "fill-yellow-500 text-yellow-500"
+                            : "text-gray-300"
+                        }`}
+                      />
+                    ))}
                   </div>
                 </div>
 
-                {/* Rating */}
-                <div className="flex items-center gap-1 bg-white dark:bg-gray-800 px-3 py-1.5 rounded-full shrink-0">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <Star
-                      key={star}
-                      className={`h-3.5 w-3.5 ${
-                        star <= review.rating
-                          ? "fill-yellow-500 text-yellow-500"
-                          : "text-gray-300"
-                      }`}
-                    />
-                  ))}
-                </div>
+                {/* Review Text */}
+                {review.review && (
+                  <div className="flex gap-3">
+                    <MessageSquare className="h-4 w-4 text-muted-foreground mt-0.5 shrink-0" />
+                    <p className="text-sm md:text-base leading-relaxed">
+                      {review.review}
+                    </p>
+                  </div>
+                )}
               </div>
+            ))}
+          </div>
 
-              {/* Review Text */}
-              {review.review && (
-                <div className="flex gap-3">
-                  <MessageSquare className="h-4 w-4 text-muted-foreground mt-0.5 shrink-0" />
-                  <p className="text-sm md:text-base leading-relaxed">
-                    {review.review}
-                  </p>
-                </div>
-              )}
+          {/* Show More Button */}
+          {hasMoreReviews && (
+            <div className="mt-6 text-center">
+              <button
+                onClick={() => setVisibleReviews((prev) => prev + 5)}
+                className="inline-flex items-center gap-2 bg-secondary text-foreground px-6 py-3 rounded-lg font-medium hover:bg-secondary/70 transition-colors"
+              >
+                Show {remainingReviews > 5 ? 5 : remainingReviews} More Reviews
+                <svg
+                  className="h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </button>
             </div>
-          ))}
-        </div>
+          )}
+        </>
       ) : (
         /* Empty State */
         <div className="text-center py-12">
