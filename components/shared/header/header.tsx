@@ -95,7 +95,7 @@ const ActionIcons = memo(function ActionIcons({
   showMobileSearch = false,
 }: ActionIconsProps) {
   return (
-    <div className="flex items-center gap-2 md:gap-4 main_container">
+    <div className="flex items-center gap-2 md:gap-4">
       {/* Mobile Search Toggle */}
       {showMobileSearch && onSearchClick && (
         <button
@@ -190,7 +190,7 @@ const Header = memo(function Header({ className }: HeaderProps) {
         className,
       )}
     >
-      <div className="container mx-auto px-4">
+      <div className="main_container">
         {/* Main Header */}
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Mobile Menu Button */}
