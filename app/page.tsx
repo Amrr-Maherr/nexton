@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { lazy, Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -16,7 +16,8 @@ import { ProductCard, CategoryCard, BrandCard } from "@/components/shared/card";
 import { useProducts } from "@/hooks/api";
 import { useCategories } from "@/hooks/api";
 import { useBrands } from "@/hooks/api";
-import { Skeleton } from "@/components/skeleton";
+import { Skeleton, SkeletonFallback } from "@/components/skeleton";
+import LazyWrapper from "@/components/ui/lazy-wrapper";
 
 // Hero slides data
 const heroSlides = [
@@ -85,84 +86,106 @@ export default function HomePage() {
     <div className="min-h-screen">
       {/* Hero Slider Section */}
       <section className="relative h-[500px] md:h-[600px] overflow-hidden">
-        <Slider
-          slidesPerView={1}
-          spaceBetween={0}
-          useFadeEffect={true}
-          hideNavigation={false}
-          swiperOptions={{
-            loop: true,
-            autoplay: { delay: 5000, disableOnInteraction: false },
-            speed: 1000,
-          }}
+        <Suspense
+          fallback={
+            <div className="w-full h-[500px] md:h-[600px] bg-secondary/50 animate-pulse" />
+          }
         >
-          {heroSlides.map((slide) => (
-            <div key={slide.id} className="relative h-[500px] md:h-[600px]">
-              {/* Background Image */}
-              <Image
-                src={slide.image}
-                alt={slide.title}
-                fill
-                className="object-cover"
-                priority
-              />
-              {/* Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" />
+          <LazyWrapper>
+            <Slider
+              slidesPerView={1}
+              spaceBetween={0}
+              useFadeEffect={true}
+              hideNavigation={false}
+              swiperOptions={{
+                loop: true,
+                autoplay: { delay: 5000, disableOnInteraction: false },
+                speed: 1000,
+              }}
+            >
+              {heroSlides.map((slide) => (
+                <div key={slide.id} className="relative h-[500px] md:h-[600px]">
+                  {/* Background Image */}
+                  <Image
+                    src={slide.image}
+                    alt={slide.title}
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                  {/* Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" />
 
-              {/* Content */}
-              <div className="absolute inset-0 flex items-center">
-                <div className="main_container">
-                  <div className="max-w-2xl text-white space-y-6">
-                    <div className="space-y-2">
-                      <p className="text-lg md:text-xl font-medium text-primary-foreground/90">
-                        {slide.subtitle}
-                      </p>
-                      <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight">
-                        {slide.title}
-                      </h1>
-                      <p className="text-lg md:text-xl text-primary-foreground/80 max-w-xl">
-                        {slide.description}
-                      </p>
+                  {/* Content */}
+                  <div className="absolute inset-0 flex items-center">
+                    <div className="main_container">
+                      <div className="max-w-2xl text-white space-y-6">
+                        <div className="space-y-2">
+                          <p className="text-lg md:text-xl font-medium text-primary-foreground/90">
+                            {slide.subtitle}
+                          </p>
+                          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight">
+                            {slide.title}
+                          </h1>
+                          <p className="text-lg md:text-xl text-primary-foreground/80 max-w-xl">
+                            {slide.description}
+                          </p>
+                        </div>
+                        <Link href={slide.href}>
+                          <Button size="lg" className="h-14 px-8 text-lg">
+                            {slide.cta}
+                            <ArrowRight className="ml-2 h-5 w-5" />
+                          </Button>
+                        </Link>
+                      </div>
                     </div>
-                    <Link href={slide.href}>
-                      <Button size="lg" className="h-14 px-8 text-lg">
-                        {slide.cta}
-                        <ArrowRight className="ml-2 h-5 w-5" />
-                      </Button>
-                    </Link>
                   </div>
                 </div>
-              </div>
-            </div>
-          ))}
-        </Slider>
+              ))}
+            </Slider>
+          </LazyWrapper>
+        </Suspense>
       </section>
 
       {/* Features Section */}
       <section className="border-y bg-card/50 backdrop-blur">
-        <div className="main_container py-12">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {features.map((feature, index) => {
-              const Icon = feature.icon;
-              return (
-                <div
-                  key={index}
-                  className="flex flex-col items-center text-center space-y-3 p-4"
-                >
-                  <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center">
-                    <Icon className="h-7 w-7 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold mb-1">{feature.title}</h3>
-                    <p className="text-sm text-muted-foreground">
-                      {feature.description}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
+        <Suspense
+          fallback={
+            <div className="main_container py-12">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                {Array.from({ length: 4 }).map((_, i) => (
+                  <Skeleton key={i} className="w-full h-32" radius="lg" />
+                ))}
+              </div>
+            </div>
+          }
+        >
+          <LazyWrapper>
+            <div className="main_container py-12">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                {features.map((feature, index) => {
+                  const Icon = feature.icon;
+                  return (
+                    <div
+                      key={index}
+                      className="flex flex-col items-center text-center space-y-3 p-4"
+                    >
+                      <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center">
+                        <Icon className="h-7 w-7 text-primary" />
+                      </div>
+                      <div>
+                        <h3 className="font-semibold mb-1">{feature.title}</h3>
+                        <p className="text-sm text-muted-foreground">
+                          {feature.description}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </LazyWrapper>
+        </Suspense>
       </section>
 
       {/* Categories Section */}
@@ -185,28 +208,43 @@ export default function HomePage() {
             </Link>
           </div>
 
-          {categoriesLoading ? (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <div key={i} className="space-y-2">
-                  <Skeleton className="w-full aspect-square" radius="lg" />
-                  <Skeleton className="w-3/4 h-4 mx-auto" radius="sm" />
+          <Suspense
+            fallback={
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <div key={i} className="space-y-2">
+                    <Skeleton className="w-full aspect-square" radius="lg" />
+                    <Skeleton className="w-3/4 h-4 mx-auto" radius="sm" />
+                  </div>
+                ))}
+              </div>
+            }
+          >
+            <LazyWrapper>
+              {categoriesLoading ? (
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <div key={i} className="space-y-2">
+                      <Skeleton className="w-full aspect-square" radius="lg" />
+                      <Skeleton className="w-3/4 h-4 mx-auto" radius="sm" />
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          ) : (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-              {featuredCategories.map((category) => (
-                <CategoryCard
-                  key={category._id}
-                  id={category._id}
-                  name={category.name}
-                  slug={category.slug}
-                  image={category.image}
-                />
-              ))}
-            </div>
-          )}
+              ) : (
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                  {featuredCategories.map((category) => (
+                    <CategoryCard
+                      key={category._id}
+                      id={category._id}
+                      name={category.name}
+                      slug={category.slug}
+                      image={category.image}
+                    />
+                  ))}
+                </div>
+              )}
+            </LazyWrapper>
+          </Suspense>
         </div>
       </section>
 
@@ -230,32 +268,48 @@ export default function HomePage() {
             </Link>
           </div>
 
-          {productsLoading ? (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-              {Array.from({ length: 8 }).map((_, i) => (
-                <div key={i} className="space-y-2">
-                  <Skeleton className="w-full aspect-square" radius="lg" />
-                  <Skeleton className="w-3/4 h-4" radius="sm" />
-                  <Skeleton className="w-1/2 h-4" radius="sm" />
+          <Suspense
+            fallback={
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                {Array.from({ length: 8 }).map((_, i) => (
+                  <div key={i} className="space-y-2">
+                    <Skeleton className="w-full aspect-square" radius="lg" />
+                    <Skeleton className="w-3/4 h-4" radius="sm" />
+                    <Skeleton className="w-1/2 h-4" radius="sm" />
+                  </div>
+                ))}
+              </div>
+            }
+          >
+            <LazyWrapper>
+              {productsLoading ? (
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                  {Array.from({ length: 8 }).map((_, i) => (
+                    <div key={i} className="space-y-2">
+                      <Skeleton className="w-full aspect-square" radius="lg" />
+                      <Skeleton className="w-3/4 h-4" radius="sm" />
+                      <Skeleton className="w-1/2 h-4" radius="sm" />
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          ) : (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-              {featuredProducts.map((product) => (
-                <ProductCard
-                  key={product._id}
-                  id={product._id}
-                  title={product.title}
-                  slug={product.slug}
-                  price={product.price}
-                  priceAfterDiscount={product.priceAfterDiscount}
-                  imageCover={product.imageCover}
-                  rating={product.ratingsAverage}
-                />
-              ))}
-            </div>
-          )}
+              ) : (
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                  {featuredProducts.map((product) => (
+                    <ProductCard
+                      key={product._id}
+                      id={product._id}
+                      title={product.title}
+                      slug={product.slug}
+                      price={product.price}
+                      priceAfterDiscount={product.priceAfterDiscount}
+                      imageCover={product.imageCover}
+                      rating={product.ratingsAverage}
+                    />
+                  ))}
+                </div>
+              )}
+            </LazyWrapper>
+          </Suspense>
         </div>
       </section>
 
@@ -279,64 +333,89 @@ export default function HomePage() {
             </Link>
           </div>
 
-          {brandsLoading ? (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <div key={i} className="space-y-2">
-                  <Skeleton className="w-full aspect-square" radius="lg" />
-                  <Skeleton className="w-1/2 h-3 mx-auto" radius="sm" />
+          <Suspense
+            fallback={
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <div key={i} className="space-y-2">
+                    <Skeleton className="w-full aspect-square" radius="lg" />
+                    <Skeleton className="w-1/2 h-3 mx-auto" radius="sm" />
+                  </div>
+                ))}
+              </div>
+            }
+          >
+            <LazyWrapper>
+              {brandsLoading ? (
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <div key={i} className="space-y-2">
+                      <Skeleton className="w-full aspect-square" radius="lg" />
+                      <Skeleton className="w-1/2 h-3 mx-auto" radius="sm" />
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          ) : (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-              {featuredBrands.map((brand) => (
-                <BrandCard
-                  key={brand._id}
-                  id={brand._id}
-                  name={brand.name}
-                  slug={brand.slug}
-                  image={brand.image}
-                />
-              ))}
-            </div>
-          )}
+              ) : (
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                  {featuredBrands.map((brand) => (
+                    <BrandCard
+                      key={brand._id}
+                      id={brand._id}
+                      name={brand.name}
+                      slug={brand.slug}
+                      image={brand.image}
+                    />
+                  ))}
+                </div>
+              )}
+            </LazyWrapper>
+          </Suspense>
         </div>
       </section>
 
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-br from-primary to-primary/80">
-        <div className="main_container">
-          <div className="max-w-3xl mx-auto text-center text-white space-y-6">
-            <h2 className="text-3xl md:text-5xl font-bold">
-              Ready to Start Shopping?
-            </h2>
-            <p className="text-lg md:text-xl text-primary-foreground/80">
-              Join thousands of happy customers and discover amazing deals on
-              quality products.
-            </p>
-            <div className="flex flex-wrap gap-4 justify-center">
-              <Link href="/auth/register">
-                <Button
-                  size="lg"
-                  variant="secondary"
-                  className="h-14 px-8 text-lg"
-                >
-                  Create Account
-                </Button>
-              </Link>
-              <Link href="/products">
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="h-14 px-8 text-lg bg-transparent border-white text-white hover:bg-white/10"
-                >
-                  Browse Products
-                </Button>
-              </Link>
+        <Suspense
+          fallback={
+            <div className="main_container py-20">
+              <Skeleton className="w-full h-40 rounded-2xl" />
             </div>
-          </div>
-        </div>
+          }
+        >
+          <LazyWrapper>
+            <div className="main_container">
+              <div className="max-w-3xl mx-auto text-center text-white space-y-6">
+                <h2 className="text-3xl md:text-5xl font-bold">
+                  Ready to Start Shopping?
+                </h2>
+                <p className="text-lg md:text-xl text-primary-foreground/80">
+                  Join thousands of happy customers and discover amazing deals
+                  on quality products.
+                </p>
+                <div className="flex flex-wrap gap-4 justify-center">
+                  <Link href="/auth/register">
+                    <Button
+                      size="lg"
+                      variant="secondary"
+                      className="h-14 px-8 text-lg"
+                    >
+                      Create Account
+                    </Button>
+                  </Link>
+                  <Link href="/products">
+                    <Button
+                      size="lg"
+                      variant="outline"
+                      className="h-14 px-8 text-lg bg-transparent border-white text-white hover:bg-white/10"
+                    >
+                      Browse Products
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </LazyWrapper>
+        </Suspense>
       </section>
     </div>
   );
