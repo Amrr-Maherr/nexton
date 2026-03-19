@@ -16,7 +16,7 @@ export function CategoryCard({
   image,
   href,
 }: CategoryCardProps) {
-  const linkHref = href || `/categories/${slug}`;
+  const linkHref = href || `/categories/${slug}-${id}`;
 
   return (
     <Link href={linkHref} className="group">
@@ -58,7 +58,7 @@ export function ProductCard({
   rating,
   href,
 }: ProductCardProps) {
-  const linkHref = href || `/products/${slug}`;
+  const linkHref = href || `/products/${slug}-${id}`;
   const hasDiscount = priceAfterDiscount && priceAfterDiscount < price;
 
   return (
@@ -113,7 +113,7 @@ interface BrandCardProps {
 }
 
 export function BrandCard({ id, name, slug, image, href }: BrandCardProps) {
-  const linkHref = href || `/brands/${slug}`;
+  const linkHref = href || `/brands/${slug}-${id}`;
 
   return (
     <Link href={linkHref} className="group">
