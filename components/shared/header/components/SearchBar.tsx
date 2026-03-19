@@ -18,7 +18,7 @@ const SearchBar = memo(function SearchBar({
   autoFocus = false,
 }: SearchBarProps) {
   return (
-    <div className={cn("relative", className)}>
+    <div className={cn("relative w-full", className)}>
       <input
         type="text"
         placeholder={placeholder}
