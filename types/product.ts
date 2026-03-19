@@ -19,6 +19,20 @@ export interface Brand {
   image: string;
 }
 
+export interface Review {
+  _id: string;
+  review?: string;
+  rating: number;
+  product: string;
+  user: {
+    _id: string;
+    name: string;
+  };
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
 export interface Product {
   sold: number | null;
   images: string[];
@@ -39,6 +53,7 @@ export interface Product {
   updatedAt: string;
   id: string;
   availableColors?: string[];
+  reviews?: Review[];
 }
 
 export interface ProductsMetadata {
