@@ -18,7 +18,7 @@ interface ReviewsProps {
   reviews?: Review[];
 }
 
-export function Reviews({ reviews }: ReviewsProps) {
+export default function Reviews({ reviews }: ReviewsProps) {
   const [showAddReview, setShowAddReview] = useState(false);
 
   const handleAddReview = (newReview: { rating: number; review: string }) => {

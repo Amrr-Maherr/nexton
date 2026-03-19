@@ -12,7 +12,7 @@ interface ProductInfoProps {
   sold?: number | null;
 }
 
-export function ProductInfo({
+export default function ProductInfo({
   title,
   price,
   priceAfterDiscount,
@@ -31,9 +31,7 @@ export function ProductInfo({
 
       {/* Price */}
       <div className="flex items-center gap-4">
-        <span className="text-2xl font-semibold text-primary">
-          ${price}
-        </span>
+        <span className="text-2xl font-semibold text-primary">${price}</span>
         {priceAfterDiscount && (
           <>
             <span className="text-lg opacity-50 line-through">
@@ -59,8 +57,7 @@ export function ProductInfo({
       {/* Product Info */}
       <div className="space-y-2">
         <p>
-          <span className="font-semibold">Brand:</span>{" "}
-          {brand?.name || "N/A"}
+          <span className="font-semibold">Brand:</span> {brand?.name || "N/A"}
         </p>
         <p>
           <span className="font-semibold">Category:</span>{" "}

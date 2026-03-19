@@ -1,15 +1,25 @@
 "use client";
 
 import { CategoryCard } from "@/components/shared/card";
+import { CardSkeleton } from "@/components/skeleton";
 import { useCategories } from "@/hooks/api";
 
 export default function CategoriesPage() {
-  const { data: categories, isLoading, error } = useCategories();
-  if (isLoading) {
+  const { data: categories, isLoading, isFetching, error } = useCategories();
+
+  // Show skeleton during initial load or when fetching new data
+  if (isLoading || isFetching) {
     return (
       <div className="main_container py-8">
-        <div className="text-center py-12">
-          <p className="opacity-70">Loading categories...</p>
+        <div className="mb-8">
+          <div className="flex flex-col gap-2">
+            <div className="w-1/3 h-8 bg-secondary/50 rounded-md animate-shimmer" />
+            <div className="w-1/4 h-4 bg-secondary/50 rounded-md animate-shimmer" />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
+          <CardSkeleton variant="category" count={10} />
         </div>
       </div>
     );

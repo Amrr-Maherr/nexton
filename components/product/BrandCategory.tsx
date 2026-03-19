@@ -25,7 +25,7 @@ interface BrandCategoryProps {
   category?: { name: string; slug: string; image: string };
 }
 
-export function BrandCategory({ brand, category }: BrandCategoryProps) {
+export default function BrandCategory({ brand, category }: BrandCategoryProps) {
   return (
     <div className="border rounded-lg p-4">
       <h2 className="text-xl font-bold mb-4">Brand & Category</h2>

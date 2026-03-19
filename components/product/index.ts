@@ -1,10 +1,11 @@
-export { ProductImages } from "./ProductImages";
-export { ProductInfo } from "./ProductInfo";
-export { ProductGallery } from "./ProductGallery";
-export { ProductDetails } from "./ProductDetails";
-export { BrandCategory } from "./BrandCategory";
-export { Reviews } from "./Reviews";
+export { default as ProductImages } from "./ProductImages";
+export { default as ProductInfo } from "./ProductInfo";
+export { default as ProductGallery } from "./ProductGallery";
+export { default as ProductDetails } from "./ProductDetails";
+export { default as BrandCategory } from "./BrandCategory";
+export { default as Reviews } from "./Reviews";
 export { AddReview } from "./AddReview";
 export { AddQuestion } from "./AddQuestion";
-export { Questions } from "./Questions";
+export { default as Questions } from "./Questions";
 export { Lightbox } from "./Lightbox";
+export { ProductError } from "./ProductError";

@@ -18,7 +18,7 @@ interface QuestionsProps {
   questions?: Question[];
 }
 
-export function Questions({ questions }: QuestionsProps) {
+export default function Questions({ questions }: QuestionsProps) {
   const [showAddQuestion, setShowAddQuestion] = useState(false);
 
   const handleAddQuestion = (newQuestion: { 

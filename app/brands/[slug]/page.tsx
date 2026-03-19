@@ -1,6 +1,7 @@
 "use client";
 import { useParams } from "next/navigation";
 import { useBrand } from "@/hooks/api";
+import { DetailsSkeleton } from "@/components/skeleton";
 import Image from "next/image";
 import Link from "next/link";
 import { parseProductSlug } from "@/utils/parseProductSlug";
@@ -9,12 +10,13 @@ export default function BrandDetailPage() {
   const params = useParams();
   const { slug } = params;
   const { id, slug: productSlug } = parseProductSlug(slug as string);
-  const { data: brand, isLoading, error } = useBrand(id as string);
+  const { data: brand, isLoading, isFetching, error } = useBrand(id as string);
 
-  if (isLoading) {
+  // Show skeleton during initial load or when fetching new data
+  if (isLoading || isFetching) {
     return (
       <div className="main_container py-8">
-        <p className="text-center opacity-70">Loading brand...</p>
+        <DetailsSkeleton variant="category" />
       </div>
     );
   }
@@ -84,10 +86,7 @@ export default function BrandDetailPage() {
       {/* Related Brands */}
       <div className="mb-8">
         <h2 className="text-2xl font-bold mb-4">Browse All Brands</h2>
-        <Link
-          href="/brands"
-          className="text-primary hover:underline"
-        >
+        <Link href="/brands" className="text-primary hover:underline">
           View all brands →
         </Link>
       </div>

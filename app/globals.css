@@ -57,8 +57,8 @@
   --secondary: #4B5563;
   --Vibrant: #0EA5E9;
   --border: #E5E7EB;
-  --background:#FFFFFF;
-  --gray-background:#F8F8F8;
+  --background: #FFFFFF;
+  --gray-background: #F8F8F8;
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
@@ -141,5 +141,37 @@
 
   html {
     @apply font-sans;
+  }
+}
+
+@layer utilities {
+
+  /* Shimmer animation for skeleton loaders */
+  .animate-shimmer {
+    background: linear-gradient(90deg,
+        oklch(0.97 0 0) 0%,
+        oklch(0.92 0 0) 50%,
+        oklch(0.97 0 0) 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+
+    100% {
+      background-position: -200% 0;
+    }
+  }
+
+  /* Dark mode shimmer */
+  .dark .animate-shimmer {
+    background: linear-gradient(90deg,
+        oklch(0.269 0 0) 0%,
+        oklch(0.32 0 0) 50%,
+        oklch(0.269 0 0) 100%);
+    background-size: 200% 100%;
   }
 }

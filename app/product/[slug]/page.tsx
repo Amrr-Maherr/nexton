@@ -2,63 +2,76 @@
 import { useParams } from "next/navigation";
 import { parseProductSlug } from "@/utils/parseProductSlug";
 import { useProduct } from "@/hooks/api";
-import {
-  ProductImages,
-  ProductInfo,
-  ProductGallery,
-  ProductDetails,
-  BrandCategory,
-  Reviews,
-  Questions,
-} from "@/components/product";
+import { DetailsSkeleton, SkeletonFallback } from "@/components/skeleton";
+import { ProductError } from "@/components/product/ProductError";
+import LazyWrapper from "@/components/ui/lazy-wrapper";
+import { lazy, Suspense } from "react";
+
+// Lazy load all components for code-splitting
+const ProductImages = lazy(() => import("@/components/product/ProductImages"));
+const ProductInfo = lazy(() => import("@/components/product/ProductInfo"));
+const ProductDetails = lazy(
+  () => import("@/components/product/ProductDetails"),
+);
+const BrandCategory = lazy(() => import("@/components/product/BrandCategory"));
+const Questions = lazy(() => import("@/components/product/Questions"));
+const Reviews = lazy(() => import("@/components/product/Reviews"));
 
 export default function ProductPage() {
   const params = useParams();
   const { slug } = params;
   const { id, slug: productSlug } = parseProductSlug(slug as string);
 
-  const { data: product, isLoading, error } = useProduct(id as string);
+  const {
+    data: product,
+    isLoading,
+    isFetching,
+    error,
+  } = useProduct(id as string);
 
-  if (isLoading) {
+  // Show skeleton during initial load or when fetching new data
+  if (isLoading || isFetching) {
     return (
       <div className="main_container py-8">
-        <p className="text-center opacity-70">Loading product...</p>
+        <DetailsSkeleton variant="product" />
       </div>
     );
   }
 
   if (error || !product) {
-    return (
-      <div className="main_container py-8">
-        <p className="text-center text-red-500">
-          {error ? "Failed to load product" : "Product not found"}
-        </p>
-      </div>
-    );
+    return <ProductError error={error} />;
   }
 
   return (
     <div className="main_container py-8">
       {/* Product Images & Info */}
-      <div className="grid md:grid-cols-2 gap-8 mb-8">
-        <ProductImages
-          imageCover={product.imageCover}
-          title={product.title}
-          images={product.images}
-        />
-        <ProductInfo
-          title={product.title}
-          price={product.price}
-          priceAfterDiscount={product.priceAfterDiscount}
-          ratingsAverage={product.ratingsAverage}
-          ratingsQuantity={product.ratingsQuantity}
-          description={product.description}
-          brand={product.brand}
-          category={product.category}
-          subcategory={product.subcategory}
-          quantity={product.quantity}
-          sold={product.sold}
-        />
+      <div className="grid md:grid-cols-2 gap-4 md:gap-8 mb-8">
+        <Suspense fallback={<SkeletonFallback />}>
+          <LazyWrapper>
+            <ProductImages
+              imageCover={product.imageCover}
+              title={product.title}
+              images={product.images}
+            />
+          </LazyWrapper>
+        </Suspense>
+        <Suspense fallback={<SkeletonFallback />}>
+          <LazyWrapper>
+            <ProductInfo
+              title={product.title}
+              price={product.price}
+              priceAfterDiscount={product.priceAfterDiscount}
+              ratingsAverage={product.ratingsAverage}
+              ratingsQuantity={product.ratingsQuantity}
+              description={product.description}
+              brand={product.brand}
+              category={product.category}
+              subcategory={product.subcategory}
+              quantity={product.quantity}
+              sold={product.sold}
+            />
+          </LazyWrapper>
+        </Suspense>
       </div>
 
       {/* Product Gallery */}
@@ -66,22 +79,38 @@ export default function ProductPage() {
 
       {/* Additional Info */}
       <div className="grid md:grid-cols-2 gap-8 mb-8">
-        <ProductDetails
-          id={product.id}
-          slug={product.slug}
-          createdAt={product.createdAt}
-          updatedAt={product.updatedAt}
-        />
-        <BrandCategory brand={product.brand} category={product.category} />
+        <Suspense fallback={<SkeletonFallback />}>
+          <LazyWrapper height={300}>
+            <ProductDetails
+              id={product.id}
+              slug={product.slug}
+              createdAt={product.createdAt}
+              updatedAt={product.updatedAt}
+            />
+          </LazyWrapper>
+        </Suspense>
+        <Suspense fallback={<SkeletonFallback />}>
+          <LazyWrapper height={300}>
+            <BrandCategory brand={product.brand} category={product.category} />
+          </LazyWrapper>
+        </Suspense>
       </div>
 
       {/* Questions & Answers */}
       <div className="mb-8">
-        <Questions questions={product.questions} />
+        <Suspense fallback={<SkeletonFallback />}>
+          <LazyWrapper>
+            <Questions questions={product.questions} />
+          </LazyWrapper>
+        </Suspense>
       </div>
 
       {/* Reviews */}
-      <Reviews reviews={product.reviews} />
+      <Suspense fallback={<SkeletonFallback />}>
+        <LazyWrapper>
+          <Reviews reviews={product.reviews} />
+        </LazyWrapper>
+      </Suspense>
     </div>
   );
 }

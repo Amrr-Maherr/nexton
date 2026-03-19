@@ -166,11 +166,11 @@ export function Lightbox({
       onTouchEnd={handleTouchEnd}
     >
       {/* Top Toolbar */}
-      <div className="flex items-center justify-between p-4 bg-gradient-to-b from-black/80 to-transparent">
-        <div className="text-white text-sm">
+      <div className="flex items-center justify-between p-3 sm:p-4 bg-gradient-to-b from-black/80 to-transparent shrink-0">
+        <div className="text-white text-xs sm:text-sm">
           {currentIndex + 1} / {images.length}
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1 sm:gap-2">
           <button
             onClick={(e) => {
               e.stopPropagation();
@@ -180,9 +180,9 @@ export function Lightbox({
             title="Toggle thumbnails"
           >
             {showThumbnails ? (
-              <Minimize className="h-5 w-5" />
+              <Minimize className="h-4 w-4 sm:h-5 sm:w-5" />
             ) : (
-              <Maximize className="h-5 w-5" />
+              <Maximize className="h-4 w-4 sm:h-5 sm:w-5" />
             )}
           </button>
           <button
@@ -192,7 +192,7 @@ export function Lightbox({
             }}
             className="p-2 hover:bg-white/10 rounded-full transition-colors text-white"
           >
-            <X className="h-6 w-6" />
+            <X className="h-5 w-5 sm:h-6 sm:w-6" />
           </button>
         </div>
       </div>
@@ -200,12 +200,12 @@ export function Lightbox({
       {/* Main Image Area */}
       <div
         ref={imageRef}
-        className="flex-1 relative flex items-center justify-center overflow-hidden"
+        className="flex-1 relative flex items-center justify-center overflow-hidden min-h-0"
         onClick={(e) => e.stopPropagation()}
       >
         {isLoading && (
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-12 h-12 border-4 border-white/30 border-t-white rounded-full animate-spin" />
+            <div className="w-10 h-10 sm:w-12 sm:h-12 border-4 border-white/30 border-t-white rounded-full animate-spin" />
           </div>
         )}
         <div
@@ -217,22 +217,22 @@ export function Lightbox({
             alt={`Product image ${currentIndex + 1}`}
             width={1200}
             height={1200}
-            className="max-w-full max-h-[80vh] object-contain"
+            className="max-w-full max-h-[70vh] sm:max-h-[80vh] object-contain"
             priority
             onLoadingComplete={() => setIsLoading(false)}
           />
         </div>
 
-        {/* Navigation Arrows */}
+        {/* Navigation Arrows - Hidden on small mobile */}
         <button
           onClick={(e) => {
             e.stopPropagation();
             onPrevious();
             setZoom(1);
           }}
-          className="absolute left-4 p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors text-white"
+          className="absolute left-2 sm:left-4 p-2 sm:p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors text-white"
         >
-          <ChevronLeft className="h-8 w-8" />
+          <ChevronLeft className="h-6 w-6 sm:h-8 sm:w-8" />
         </button>
         <button
           onClick={(e) => {
@@ -240,25 +240,25 @@ export function Lightbox({
             onNext();
             setZoom(1);
           }}
-          className="absolute right-4 p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors text-white"
+          className="absolute right-2 sm:right-4 p-2 sm:p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors text-white"
         >
-          <ChevronRight className="h-8 w-8" />
+          <ChevronRight className="h-6 w-6 sm:h-8 sm:w-8" />
         </button>
       </div>
 
-      {/* Bottom Controls */}
-      <div className="flex items-center justify-center gap-2 p-4 bg-gradient-to-t from-black/80 to-transparent">
+      {/* Bottom Controls - Scrollable on mobile */}
+      <div className="flex items-center justify-center gap-1 sm:gap-2 p-2 sm:p-4 bg-gradient-to-t from-black/80 to-transparent shrink-0 overflow-x-auto">
         <button
           onClick={(e) => {
             e.stopPropagation();
             handleZoomOut();
           }}
-          className="p-2 hover:bg-white/10 rounded-full transition-colors text-white"
+          className="p-2 hover:bg-white/10 rounded-full transition-colors text-white shrink-0"
           title="Zoom out (-)"
         >
-          <ZoomOut className="h-5 w-5" />
+          <ZoomOut className="h-4 w-4 sm:h-5 sm:w-5" />
         </button>
-        <span className="text-white text-sm w-12 text-center">
+        <span className="text-white text-xs sm:text-sm w-12 text-center shrink-0">
           {Math.round(zoom * 100)}%
         </span>
         <button
@@ -266,34 +266,34 @@ export function Lightbox({
             e.stopPropagation();
             handleZoomIn();
           }}
-          className="p-2 hover:bg-white/10 rounded-full transition-colors text-white"
+          className="p-2 hover:bg-white/10 rounded-full transition-colors text-white shrink-0"
           title="Zoom in (+)"
         >
-          <ZoomIn className="h-5 w-5" />
+          <ZoomIn className="h-4 w-4 sm:h-5 sm:w-5" />
         </button>
         <button
           onClick={(e) => {
             e.stopPropagation();
             handleResetZoom();
           }}
-          className="p-2 hover:bg-white/10 rounded-full transition-colors text-white"
+          className="p-2 hover:bg-white/10 rounded-full transition-colors text-white shrink-0"
           title="Reset zoom"
         >
-          <Maximize className="h-5 w-5" />
+          <Maximize className="h-4 w-4 sm:h-5 sm:w-5" />
         </button>
-        <div className="w-px h-6 bg-white/30 mx-2" />
+        <div className="w-px h-4 sm:h-6 bg-white/30 mx-1 sm:mx-2 shrink-0" />
         <button
           onClick={(e) => {
             e.stopPropagation();
             toggleFullscreen();
           }}
-          className="p-2 hover:bg-white/10 rounded-full transition-colors text-white"
+          className="p-2 hover:bg-white/10 rounded-full transition-colors text-white shrink-0"
           title="Fullscreen (F)"
         >
           {isFullscreen ? (
-            <Minimize className="h-5 w-5" />
+            <Minimize className="h-4 w-4 sm:h-5 sm:w-5" />
           ) : (
-            <Maximize className="h-5 w-5" />
+            <Maximize className="h-4 w-4 sm:h-5 sm:w-5" />
           )}
         </button>
         <button
@@ -301,13 +301,13 @@ export function Lightbox({
             e.stopPropagation();
             setIsPlaying(!isPlaying);
           }}
-          className="p-2 hover:bg-white/10 rounded-full transition-colors text-white"
+          className="p-2 hover:bg-white/10 rounded-full transition-colors text-white shrink-0"
           title="Slideshow (Space)"
         >
           {isPlaying ? (
-            <Pause className="h-5 w-5" />
+            <Pause className="h-4 w-4 sm:h-5 sm:w-5" />
           ) : (
-            <Play className="h-5 w-5" />
+            <Play className="h-4 w-4 sm:h-5 sm:w-5" />
           )}
         </button>
         <button
@@ -315,26 +315,26 @@ export function Lightbox({
             e.stopPropagation();
             handleDownload();
           }}
-          className="p-2 hover:bg-white/10 rounded-full transition-colors text-white"
+          className="p-2 hover:bg-white/10 rounded-full transition-colors text-white shrink-0"
           title="Download"
         >
-          <Download className="h-5 w-5" />
+          <Download className="h-4 w-4 sm:h-5 sm:w-5" />
         </button>
         <button
           onClick={(e) => {
             e.stopPropagation();
             handleShare();
           }}
-          className="p-2 hover:bg-white/10 rounded-full transition-colors text-white"
+          className="p-2 hover:bg-white/10 rounded-full transition-colors text-white shrink-0"
           title="Share"
         >
-          <Share2 className="h-5 w-5" />
+          <Share2 className="h-4 w-4 sm:h-5 sm:w-5" />
         </button>
       </div>
 
       {/* Thumbnail Strip with Swiper */}
       {showThumbnails && (
-        <div className="p-4 bg-black/80">
+        <div className="p-2 sm:p-4 bg-black/80 shrink-0">
           <Swiper
             modules={[FreeMode, Navigation]}
             freeMode={true}
@@ -346,7 +346,7 @@ export function Lightbox({
             {images.map((image, index) => (
               <SwiperSlide
                 key={index}
-                style={{ width: "80px", height: "80px" }}
+                style={{ width: "60px", height: "60px" }}
               >
                 <button
                   onClick={(e) => {

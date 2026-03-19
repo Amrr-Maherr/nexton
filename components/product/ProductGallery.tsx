@@ -5,7 +5,7 @@ interface ProductGalleryProps {
   title: string;
 }
 
-export function ProductGallery({ images, title }: ProductGalleryProps) {
+export default function ProductGallery({ images, title }: ProductGalleryProps) {
   if (!images || images.length <= 1) return null;
 
   return (

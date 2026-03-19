@@ -5,7 +5,7 @@ interface ProductDetailsProps {
   updatedAt: string;
 }
 
-export function ProductDetails({
+export default function ProductDetails({
   id,
   slug,
   createdAt,

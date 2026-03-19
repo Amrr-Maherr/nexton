@@ -1,6 +1,7 @@
 "use client";
 import { useParams } from "next/navigation";
 import { useCategory } from "@/hooks/api";
+import { DetailsSkeleton } from "@/components/skeleton";
 import Image from "next/image";
 import Link from "next/link";
 import { parseProductSlug } from "@/utils/parseProductSlug";
@@ -9,12 +10,18 @@ export default function CategoryDetailPage() {
   const params = useParams();
   const { slug } = params;
   const { id, slug: productSlug } = parseProductSlug(slug as string);
-  const { data: category, isLoading, error } = useCategory(id as string);
+  const {
+    data: category,
+    isLoading,
+    isFetching,
+    error,
+  } = useCategory(id as string);
 
-  if (isLoading) {
+  // Show skeleton during initial load or when fetching new data
+  if (isLoading || isFetching) {
     return (
       <div className="main_container py-8">
-        <p className="text-center opacity-70">Loading category...</p>
+        <DetailsSkeleton variant="category" />
       </div>
     );
   }
@@ -84,10 +91,7 @@ export default function CategoryDetailPage() {
       {/* Related Categories */}
       <div className="mb-8">
         <h2 className="text-2xl font-bold mb-4">Browse All Categories</h2>
-        <Link
-          href="/categories"
-          className="text-primary hover:underline"
-        >
+        <Link href="/categories" className="text-primary hover:underline">
           View all categories →
         </Link>
       </div>
