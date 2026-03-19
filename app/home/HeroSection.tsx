@@ -6,7 +6,8 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Slider from "@/components/shared/slider/slider";
 import LazyWrapper from "@/components/ui/lazy-wrapper";
-
+import bg from "../assets/images/hero-bg.png"
+import heroBg from "../assets/images/bg-image.png"
 // Hero slides data
 const heroSlides = [
   {
@@ -24,8 +25,7 @@ const heroSlides = [
     title: "Premium Quality",
     subtitle: "Best brands worldwide",
     description: "Experience luxury at affordable prices",
-    image:
-      "https://images.unsplash.com/photo-1472851294608-4155f2118c03?w=1600&h=900&fit=crop",
+    image: heroBg,
     cta: "Explore",
     href: "/brands",
   },
@@ -34,8 +34,7 @@ const heroSlides = [
     title: "Flash Sale",
     subtitle: "Limited time offers",
     description: "Don't miss out on incredible deals",
-    image:
-      "https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=1600&h=900&fit=crop",
+    image: bg,
     cta: "View Deals",
     href: "/products",
   },
@@ -43,7 +42,7 @@ const heroSlides = [
 
 export function HeroSection() {
   return (
-    <section className="relative h-[500px] md:h-[600px] overflow-hidden">
+    <section className="relative h-screen overflow-hidden">
       <Suspense
         fallback={
           <div className="w-full h-[500px] md:h-[600px] bg-secondary/50 animate-pulse" />
@@ -62,7 +61,7 @@ export function HeroSection() {
             }}
           >
             {heroSlides.map((slide) => (
-              <div key={slide.id} className="relative h-[500px] md:h-[600px]">
+              <div key={slide.id} className="relative h-screen">
                 {/* Background Image */}
                 <Image
                   src={slide.image}
@@ -76,7 +75,7 @@ export function HeroSection() {
 
                 {/* Content */}
                 <div className="absolute inset-0 flex items-center">
-                  <div className="main_container">
+                  <div className="px-[70px]">
                     <div className="max-w-2xl text-white space-y-6">
                       <div className="space-y-2">
                         <p className="text-lg md:text-xl font-medium text-primary-foreground/90">
