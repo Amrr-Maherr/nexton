@@ -1,38 +1,22 @@
-import { GetAllCategories } from "@/services/categoryServices";
+"use client";
+
 import { CategoryCard } from "@/components/shared/card";
+import { useCategories } from "@/hooks/api";
 
-export default async function CategoriesPage() {
-  try {
-    const response = await GetAllCategories();
-    const categories = response.data;
+export default function CategoriesPage() {
+  const { data: categories, isLoading, error } = useCategories();
 
+  if (isLoading) {
     return (
       <div className="main_container py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">Categories</h1>
-          <p className="opacity-70">Browse all categories</p>
+        <div className="text-center py-12">
+          <p className="opacity-70">Loading categories...</p>
         </div>
-
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
-          {categories.map((category) => (
-            <CategoryCard
-              key={category._id}
-              id={category._id}
-              name={category.name}
-              slug={category.slug}
-              image={category.image}
-            />
-          ))}
-        </div>
-
-        {categories.length === 0 && (
-          <div className="text-center py-12 opacity-70">
-            <p>No categories found</p>
-          </div>
-        )}
       </div>
     );
-  } catch (error) {
+  }
+
+  if (error) {
     return (
       <div className="main_container py-8">
         <div className="text-center py-12">
@@ -42,4 +26,35 @@ export default async function CategoriesPage() {
       </div>
     );
   }
+
+  if (!categories || categories.length === 0) {
+    return (
+      <div className="main_container py-8">
+        <div className="text-center py-12 opacity-70">
+          <p>No categories found</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="main_container py-8">
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold mb-2">Categories</h1>
+        <p className="opacity-70">Browse all categories</p>
+      </div>
+
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
+        {categories.map((category) => (
+          <CategoryCard
+            key={category._id}
+            id={category._id}
+            name={category.name}
+            slug={category.slug}
+            image={category.image}
+          />
+        ))}
+      </div>
+    </div>
+  );
 }
