@@ -100,21 +100,22 @@ export default function ProductPage() {
         </Suspense>
       </div>
 
-      {/* Questions & Answers */}
-      <div className="mb-8">
+      {/* Questions & Reviews - Two Columns */}
+      <div className="grid md:grid-cols-2 gap-4 md:gap-8 mb-8">
+        {/* Questions & Answers */}
         <Suspense fallback={<SkeletonFallback />}>
           <LazyWrapper>
             <Questions questions={product.questions} />
           </LazyWrapper>
         </Suspense>
-      </div>
 
-      {/* Reviews */}
-      <Suspense fallback={<SkeletonFallback />}>
-        <LazyWrapper>
-          <Reviews reviews={product.reviews} />
-        </LazyWrapper>
-      </Suspense>
+        {/* Reviews */}
+        <Suspense fallback={<SkeletonFallback />}>
+          <LazyWrapper>
+            <Reviews reviews={product.reviews} />
+          </LazyWrapper>
+        </Suspense>
+      </div>
     </div>
   );
 }
