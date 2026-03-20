@@ -5,14 +5,16 @@ import { CardSkeleton } from "@/components/skeleton";
 import { ProductFilters } from "@/components/shared/product-filters";
 import { Pagination } from "@/components/shared/pagination";
 import { useProducts } from "@/hooks/api";
+import { useState } from "react";
 
 export default function ProductsPage() {
+  const [Page, setPage] = useState(1);
   const {
     data: productsResponse,
     isLoading,
     isFetching,
     error,
-  } = useProducts();
+  } = useProducts(Page);
 
   // Show skeleton during initial load or when fetching new data
   if (isLoading || isFetching) {
@@ -68,7 +70,6 @@ export default function ProductsPage() {
         <h1 className="text-3xl font-bold mb-2">Products</h1>
         <p className="opacity-70">Browse all products</p>
       </div>
-
       <div className="grid grid-cols-12 gap-6">
         {/* Filters Sidebar */}
         <aside className="hidden lg:block lg:col-span-3">
@@ -96,7 +97,7 @@ export default function ProductsPage() {
 
           {/* Pagination */}
           <div className="mt-8 flex justify-center">
-            <Pagination currentPage={currentPage} totalPages={totalPages} />
+            <Pagination totalPages={totalPages} currentPage={currentPage} setPage={setPage} />
           </div>
         </div>
       </div>

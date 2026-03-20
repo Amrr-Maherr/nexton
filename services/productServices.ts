@@ -4,10 +4,12 @@ import axios from "axios";
 const BaseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 const ProductsEndPoint = process.env.NEXT_PUBLIC_PRODUCTS_ENDPOINT;
 
-export const GetAllProducts = async (filters?: Record<string, string>): Promise<ProductsResponse> => {
+export const GetAllProducts = async (page?: number): Promise<ProductsResponse> => {
     try {
         const response = await axios.get<ProductsResponse>(`${BaseUrl}${ProductsEndPoint}`, {
-            params: filters
+            params: {
+                page
+            }
         });
         return response.data;
     } catch (error) {
