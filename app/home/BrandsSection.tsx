@@ -7,19 +7,18 @@ import { BrandCard } from "@/components/shared/card";
 import { Skeleton } from "@/components/skeleton";
 import LazyWrapper from "@/components/ui/lazy-wrapper";
 import { useBrands } from "@/hooks/api";
+import Slider from "@/components/shared/slider/slider";
 
 export function BrandsSection() {
   const { data: brands, isLoading } = useBrands();
-  const featuredBrands = brands?.slice(0, 5) || [];
+  const featuredBrands = brands?.slice(0, 8) || [];
 
   return (
     <section className="py-16">
       <div className="main_container">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h2 className="text-3xl md:text-4xl font-bold mb-2">
-              Top Brands
-            </h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-2">Top Brands</h2>
             <p className="text-muted-foreground">
               Discover your favorite brands
             </p>
@@ -55,17 +54,23 @@ export function BrandsSection() {
                 ))}
               </div>
             ) : (
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                {featuredBrands.map((brand) => (
-                  <BrandCard
-                    key={brand._id}
-                    id={brand._id}
-                    name={brand.name}
-                    slug={brand.slug}
-                    image={brand.image}
-                  />
-                ))}
-              </div>
+              // <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                <Slider
+                  slidesPerView={6}
+                  slidesPerViewMobile={2.5}
+                  hideNavigation={false}
+                >
+                  {featuredBrands.map((brand) => (
+                    <BrandCard
+                      key={brand._id}
+                      id={brand._id}
+                      name={brand.name}
+                      slug={brand.slug}
+                      image={brand.image}
+                    />
+                  ))}
+                </Slider>
+              // </div>
             )}
           </LazyWrapper>
         </Suspense>

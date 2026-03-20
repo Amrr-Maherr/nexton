@@ -7,10 +7,11 @@ import { CategoryCard } from "@/components/shared/card";
 import { Skeleton } from "@/components/skeleton";
 import LazyWrapper from "@/components/ui/lazy-wrapper";
 import { useCategories } from "@/hooks/api";
+import Slider from "@/components/shared/slider/slider";
 
 export function CategoriesSection() {
   const { data: categories, isLoading } = useCategories();
-  const featuredCategories = categories?.slice(0, 5) || [];
+  const featuredCategories = categories?.slice(0, 8) || [];
 
   return (
     <section className="py-16">
@@ -55,7 +56,12 @@ export function CategoriesSection() {
                 ))}
               </div>
             ) : (
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+              // <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+              <Slider
+                slidesPerView={6}
+                slidesPerViewMobile={2.5}
+                hideNavigation={false}
+              >
                 {featuredCategories.map((category) => (
                   <CategoryCard
                     key={category._id}
@@ -65,7 +71,8 @@ export function CategoriesSection() {
                     image={category.image}
                   />
                 ))}
-              </div>
+              </Slider>
+              // </div>
             )}
           </LazyWrapper>
         </Suspense>
