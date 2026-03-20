@@ -8,13 +8,13 @@ import { useProducts } from "@/hooks/api";
 import { useState } from "react";
 
 export default function ProductsPage() {
-  const [Page, setPage] = useState(1);
+  const [page, setPage] = useState(1);
   const {
     data: productsResponse,
     isLoading,
     isFetching,
     error,
-  } = useProducts(Page);
+  } = useProducts(page);
 
   // Show skeleton during initial load or when fetching new data
   if (isLoading || isFetching) {
@@ -97,7 +97,11 @@ export default function ProductsPage() {
 
           {/* Pagination */}
           <div className="mt-8 flex justify-center">
-            <Pagination totalPages={totalPages} currentPage={currentPage} setPage={setPage} />
+            <Pagination
+              totalPages={totalPages}
+              currentPage={currentPage}
+              setPage={setPage}
+            />
           </div>
         </div>
       </div>

@@ -7,7 +7,7 @@ export interface UseProductsOptions {
   page?: number;
 }
 
-export function useProducts(page?: UseProductsOptions) {
+export function useProducts(page?: number) {
 
   return useQuery({
     queryKey: [PRODUCTS_QUERY_KEY, page],
