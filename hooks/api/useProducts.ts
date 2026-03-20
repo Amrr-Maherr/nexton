@@ -14,7 +14,7 @@ export function useProducts(options?: UseProductsOptions) {
     queryKey: [PRODUCTS_QUERY_KEY, filters],
     queryFn: async () => {
       const response = await GetAllProducts(filters);
-      return response.data;
+      return response;
     },
   });
 }

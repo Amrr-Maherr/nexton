@@ -10,8 +10,8 @@ import { useProducts } from "@/hooks/api";
 import Slider from "@/components/shared/slider/slider";
 
 export function ProductsSection() {
-  const { data: products, isLoading } = useProducts();
-  const featuredProducts = products?.slice(0, 8) || [];
+  const { data: productsResponse, isLoading } = useProducts();
+  const featuredProducts = productsResponse?.data?.slice(0, 8) || [];
 
   return (
     <section className="py-16 bg-secondary/30">
@@ -59,20 +59,24 @@ export function ProductsSection() {
               </div>
             ) : (
               // <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-                <Slider slidesPerView={6} slidesPerViewMobile={2.5} hideNavigation={false}>
-                  {featuredProducts.map((product) => (
-                    <ProductCard
-                      key={product._id}
-                      id={product._id}
-                      title={product.title}
-                      slug={product.slug}
-                      price={product.price}
-                      priceAfterDiscount={product.priceAfterDiscount}
-                      imageCover={product.imageCover}
-                      rating={product.ratingsAverage}
-                    />
-                  ))}
-                </Slider>
+              <Slider
+                slidesPerView={6}
+                slidesPerViewMobile={2.5}
+                hideNavigation={false}
+              >
+                {featuredProducts.map((product) => (
+                  <ProductCard
+                    key={product._id}
+                    id={product._id}
+                    title={product.title}
+                    slug={product.slug}
+                    price={product.price}
+                    priceAfterDiscount={product.priceAfterDiscount}
+                    imageCover={product.imageCover}
+                    rating={product.ratingsAverage}
+                  />
+                ))}
+              </Slider>
               // </div>
             )}
           </LazyWrapper>

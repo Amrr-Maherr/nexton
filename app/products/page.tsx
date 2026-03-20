@@ -2,24 +2,36 @@
 
 import { ProductCard } from "@/components/shared/card";
 import { CardSkeleton } from "@/components/skeleton";
+import { ProductFilters } from "@/components/shared/product-filters";
+import { Pagination } from "@/components/shared/pagination";
 import { useProducts } from "@/hooks/api";
 
 export default function ProductsPage() {
-  const { data: products, isLoading, isFetching, error } = useProducts();
+  const {
+    data: productsResponse,
+    isLoading,
+    isFetching,
+    error,
+  } = useProducts();
 
   // Show skeleton during initial load or when fetching new data
   if (isLoading || isFetching) {
     return (
       <div className="main_container py-8">
-        <div className="mb-8">
-          <div className="flex flex-col gap-2">
-            <div className="w-1/3 h-8 bg-secondary/50 rounded-md animate-shimmer" />
-            <div className="w-1/4 h-4 bg-secondary/50 rounded-md animate-shimmer" />
-          </div>
+        <div className="mb-8 flex flex-col gap-2">
+          <div className="w-1/3 h-8 bg-secondary/50 rounded-md animate-shimmer" />
+          <div className="w-1/4 h-4 bg-secondary/50 rounded-md animate-shimmer" />
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
-          <CardSkeleton variant="product" count={10} />
+        <div className="grid grid-cols-12 gap-6">
+          <div className="hidden lg:block lg:col-span-3">
+            <CardSkeleton variant="product" count={4} />
+          </div>
+          <div className="col-span-12 lg:col-span-9">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+              <CardSkeleton variant="product" count={6} />
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -35,6 +47,10 @@ export default function ProductsPage() {
       </div>
     );
   }
+
+  const products = productsResponse?.data || [];
+  const currentPage = productsResponse?.metadata?.currentPage || 1;
+  const totalPages = productsResponse?.metadata?.numberOfPages || 1;
 
   if (!products || products.length === 0) {
     return (
@@ -53,19 +69,36 @@ export default function ProductsPage() {
         <p className="opacity-70">Browse all products</p>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
-        {products.map((product) => (
-          <ProductCard
-            key={product._id}
-            id={product._id}
-            title={product.title}
-            slug={product.slug}
-            price={product.price}
-            priceAfterDiscount={product.priceAfterDiscount}
-            imageCover={product.imageCover}
-            rating={product.ratingsAverage}
-          />
-        ))}
+      <div className="grid grid-cols-12 gap-6">
+        {/* Filters Sidebar */}
+        <aside className="hidden lg:block lg:col-span-3">
+          <div className="sticky top-4 rounded-lg border bg-background p-4">
+            <ProductFilters />
+          </div>
+        </aside>
+
+        {/* Products Grid */}
+        <div className="lg:col-span-9">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+            {products.map((product) => (
+              <ProductCard
+                key={product._id}
+                id={product._id}
+                title={product.title}
+                slug={product.slug}
+                price={product.price}
+                priceAfterDiscount={product.priceAfterDiscount}
+                imageCover={product.imageCover}
+                rating={product.ratingsAverage}
+              />
+            ))}
+          </div>
+
+          {/* Pagination */}
+          <div className="mt-8 flex justify-center">
+            <Pagination currentPage={currentPage} totalPages={totalPages} />
+          </div>
+        </div>
       </div>
     </div>
   );
